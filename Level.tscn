@@ -10,11 +10,14 @@ extents = Vector2( 40.5, 30.5 )
 extents = Vector2( 507, 10 )
 
 [node name="Node2D" type="Node2D"]
+position = Vector2( 1, 0 )
 
 [node name="Physics Player" type="KinematicBody2D" parent="."]
 physics_interpolation_mode = 2
 position = Vector2( 1, 0 )
 script = ExtResource( 2 )
+speed = 300
+jumpHeight = 150
 
 [node name="Player" type="Sprite" parent="Physics Player"]
 position = Vector2( 71, 105 )
@@ -26,10 +29,9 @@ hframes = 4
 position = Vector2( 70.5, 105.5 )
 shape = SubResource( 1 )
 
-[node name="Area2D" type="Area2D" parent="."]
-position = Vector2( 13, 573 )
+[node name="KinematicBody2D" type="KinematicBody2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
 physics_interpolation_mode = 2
-position = Vector2( 497, 0 )
+position = Vector2( 510, 573 )
 shape = SubResource( 2 )

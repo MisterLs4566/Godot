@@ -1,6 +1,8 @@
 extends KinematicBody2D
 
 export var gravity = 1
+export var speed = 10
+export var jumpHeight = 10
 var velocity = Vector2(0, 0)
 var collision
 
@@ -11,7 +13,7 @@ var collision
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	set_process_input(true) # Replace with function body.
 
 func _process(delta):
 	_gravity()
@@ -26,3 +28,14 @@ func _physics_process(delta):
 
 func _gravity():
 	velocity.y += gravity
+
+func _input(ev):
+	if Input.is_key_pressed(KEY_D):
+		velocity.x = speed
+	elif Input.is_key_pressed(KEY_A):
+		velocity.x = -speed
+	else:
+		velocity.x = 0
+	
+	if Input.is_key_pressed(KEY_SPACE):
+		velocity.y -= jumpHeight;
