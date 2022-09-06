@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Block.png-60828d4ded3b27bfcf581bef820657ed.stex"
+path="res://.import/Water.png-15bbc89470cab1df5d73a3a145a48d45.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/Block.png"
-dest_files=[ "res://.import/Block.png-60828d4ded3b27bfcf581bef820657ed.stex" ]
+source_file="res://Textures/Water.png"
+dest_files=[ "res://.import/Water.png-15bbc89470cab1df5d73a3a145a48d45.stex" ]
 
 [params]
 
@@ -29,7 +29,7 @@ process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
 process/normal_map_invert_y=false
-stream=0
+stream=false
 size_limit=0
 detect_3d=true
-svg/scale=39.823
+svg/scale=1.0

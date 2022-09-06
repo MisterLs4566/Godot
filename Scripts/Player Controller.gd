@@ -5,30 +5,38 @@ export var speed = 10
 export var jumpHeight = 10
 var velocity = Vector2(0, 0)
 var collision
+var groundRay
+var isGrounded = false
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	set_process_input(true) # Replace with function body.
+	set_process_input(true)
+	groundRay = get_node("groundRay")
 
 func _process(delta):
+	_grounded()
 	_gravity()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _grounded():
+	if groundRay.is_colliding():
+		isGrounded = true
+	else:
+		isGrounded = false
+
+func _gravity():
+	if isGrounded == false:
+		velocity.y += gravity
+
 func _physics_process(delta):
 	
 	collision = move_and_collide(Vector2(velocity.x, velocity.y * gravity) * delta)
 	
 	if collision:
 		velocity = velocity.slide(collision.normal)
-
-func _gravity():
-	velocity.y += gravity
-
+		if collision.collider.get_collision_layer() == 2:
+			"""Destroy Game Object"""
+			#self.queue_free()
+			get_tree().reload_current_scene()
+			
 func _input(ev):
 	if Input.is_key_pressed(KEY_D):
 		velocity.x = speed
@@ -38,4 +46,6 @@ func _input(ev):
 		velocity.x = 0
 	
 	if Input.is_key_pressed(KEY_SPACE):
-		velocity.y -= jumpHeight;
+		if isGrounded == true:
+			velocity.y = 0
+			velocity.y -= jumpHeight;
