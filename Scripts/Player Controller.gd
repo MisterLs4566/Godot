@@ -40,8 +40,10 @@ func _physics_process(delta):
 func _input(ev):
 	if Input.is_key_pressed(KEY_D):
 		velocity.x = speed
+		get_node("Player").set_flip_h(false)
 	elif Input.is_key_pressed(KEY_A):
 		velocity.x = -speed
+		get_node("Player").set_flip_h(true)
 	else:
 		velocity.x = 0
 	
