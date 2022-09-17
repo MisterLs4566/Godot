@@ -1,5 +1,4 @@
 extends KinematicBody2D
-
 export var gravity = 1
 export var speed = 10
 export var jumpHeight = 10
@@ -38,16 +37,16 @@ func _physics_process(delta):
 			get_tree().reload_current_scene()
 			
 func _input(ev):
-	if Input.is_key_pressed(KEY_D):
+	if Input.is_action_pressed("move_right"):
 		velocity.x = speed
 		get_node("Player").set_flip_h(false)
-	elif Input.is_key_pressed(KEY_A):
+	elif Input.is_action_pressed("move_left"):
 		velocity.x = -speed
 		get_node("Player").set_flip_h(true)
 	else:
 		velocity.x = 0
 	
-	if Input.is_key_pressed(KEY_SPACE):
+	if Input.is_action_pressed("jump"):
 		if isGrounded == true:
 			velocity.y = 0
 			velocity.y -= jumpHeight;
