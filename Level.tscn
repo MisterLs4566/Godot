@@ -28,8 +28,16 @@ hframes = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Physics Player"]
 shape = SubResource( 3 )
 
-[node name="groundRay" type="RayCast2D" parent="Physics Player"]
+[node name="groundRayLeft" type="RayCast2D" parent="Physics Player"]
 physics_interpolation_mode = 2
+position = Vector2( -30, 0 )
+enabled = true
+cast_to = Vector2( 0, 35 )
+collide_with_areas = true
+
+[node name="groundRayRight" type="RayCast2D" parent="Physics Player"]
+physics_interpolation_mode = 2
+position = Vector2( 30, 0 )
 enabled = true
 cast_to = Vector2( 0, 35 )
 collide_with_areas = true

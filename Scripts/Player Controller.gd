@@ -4,19 +4,21 @@ export var speed = 10
 export var jumpHeight = 10
 var velocity = Vector2(0, 0)
 var collision
-var groundRay
+var groundRayLeft
+var groundRayRight
 var isGrounded = false
 
 func _ready():
 	set_process_input(true)
-	groundRay = get_node("groundRay")
+	groundRayLeft = get_node("groundRayLeft")
+	groundRayRight = get_node("groundRayRight")
 
 func _process(delta):
 	_grounded()
 	_gravity()
 
 func _grounded():
-	if groundRay.is_colliding():
+	if groundRayLeft.is_colliding() or groundRayRight.is_colliding():
 		isGrounded = true
 	else:
 		isGrounded = false
