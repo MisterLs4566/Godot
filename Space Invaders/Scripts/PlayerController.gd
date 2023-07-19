@@ -1,6 +1,6 @@
-extends Node
+extends KinematicBody2D
 
-var speed = 1
+var speed = 300
 var velocity = Vector2()
 
 # Called when the node enters the scene tree for the first time.
@@ -9,15 +9,20 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func input():
 	if Input.is_action_pressed("ui_right"):
-		print("test")
 		velocity.x += 1
 	if Input.is_action_pressed("ui_left"):
 		velocity.x -= 1
 	if Input.is_action_pressed("ui_up"):
-		velocity.y += 1
-	if Input.is_action_pressed("ui_down"):
 		velocity.y -= 1
+	if Input.is_action_pressed("ui_down"):
+		velocity.y += 1
 	
-	velocity = velocity.move_toward(velocity, delta * speed)
+	#velocity = velocity.normalized() * speed
+	
+func _process(delta):
+	input()
+	velocity = velocity.normalized() * delta * speed
+	move_and_collide(velocity)
+	velocity = Vector2.ZERO
