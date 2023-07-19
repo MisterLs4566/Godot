@@ -1,6 +1,0 @@
-Godot Engine v3.5.stable.official.991bb6ac7 - https://godotengine.org
-OpenGL ES 3.0 Renderer: Intel(R) UHD Graphics 630
-Async. shader compilation: OFF
- 
-ERROR: Condition "tk_rb[ofs].type != TK_IDENTIFIER" is true. Returned: StringName()
-   at: get_token_identifier (modules/gdscript/gdscript_tokenizer.cpp:1117) - Condition "tk_rb[ofs].type != TK_IDENTIFIER" is true. Returned: StringName()

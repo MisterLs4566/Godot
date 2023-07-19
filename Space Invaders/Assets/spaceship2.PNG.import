@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Bush.png-85fcd9194eac5fc100e8448f02ec6de3.stex"
+path="res://.import/spaceship2.PNG-d0973871586a677fe60b12cd20266d7b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/Bush.png"
-dest_files=[ "res://.import/Bush.png-85fcd9194eac5fc100e8448f02ec6de3.stex" ]
+source_file="res://Assets/spaceship2.PNG"
+dest_files=[ "res://.import/spaceship2.PNG-d0973871586a677fe60b12cd20266d7b.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
