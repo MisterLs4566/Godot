@@ -26,3 +26,7 @@ func _process(delta):
 	velocity = velocity.normalized() * speed * delta
 	move_and_collide(velocity)
 	velocity = Vector2.ZERO
+
+
+func _on_Button_pressed():
+	print("test")
