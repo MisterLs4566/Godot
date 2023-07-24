@@ -7,6 +7,9 @@ var player
 var isShooting = false
 var maxDistance = 350
 
+var collision
+var collisionCollider
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	player = get_node("../Player")
@@ -19,6 +22,15 @@ func _process(delta):
 		if position.distance_to(oldPosition) > maxDistance:
 				velocity = Vector2.ZERO
 				$AnimatedSprite.play("Explosion")
+	if get_slide_count() != 0:
+		for i in range(0, get_slide_count()):
+				collision = get_slide_collision(i).collider as KinematicBody2D
+				collisionCollider = get_slide_collision(i).collider as CollisionObject2D
+				
+				if collisionCollider.collision_layer == 2:
+					collision.queue_free()
+					velocity = Vector2.ZERO
+					$AnimatedSprite.play("Explosion")
 
 func _on_Player_shoot():
 	if isShooting == false:

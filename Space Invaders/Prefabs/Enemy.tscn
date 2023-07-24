@@ -23,20 +23,18 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 0.933333, 1 )
+[sub_resource type="CircleShape2D" id=6]
 
 [node name="Enemy" type="KinematicBody2D"]
+collision_layer = 2
+collision_mask = 3
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 10, 10 )
 frames = SubResource( 1 )
-frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -1.90735e-06, 5.00001 )
-scale = Vector2( 75, 75 )
-shape = SubResource( 2 )
-disabled = true
+scale = Vector2( 7, 7 )
+shape = SubResource( 6 )

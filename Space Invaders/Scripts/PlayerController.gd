@@ -4,6 +4,7 @@ var speed = 500
 var velocity = Vector2()
 var rot = 1
 signal shoot
+signal killed
 var slowDown = false
 
 func _ready():

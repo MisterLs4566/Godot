@@ -1,10 +1,14 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Prefabs/Enemy.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Prefabs/Laser.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/GameController.gd" type="Script" id=4]
+[ext_resource path="res://Prefabs/Asteroid.tscn" type="PackedScene" id=5]
 
 [node name="Node2D" type="Node2D"]
+modulate = Color( 0.67451, 0.658824, 0.658824, 1 )
+script = ExtResource( 4 )
 
 [node name="Laser" parent="." instance=ExtResource( 3 )]
 visible = false
@@ -24,7 +28,13 @@ drag_margin_right = 0.0
 drag_margin_bottom = 0.0
 
 [node name="Enemy" parent="." instance=ExtResource( 2 )]
-position = Vector2( -560, -286 )
+position = Vector2( -556, -284 )
 rotation = -3.14159
+
+[node name="Enemy2" parent="." instance=ExtResource( 2 )]
+position = Vector2( -349, 146 )
+
+[node name="Asteroid" parent="." instance=ExtResource( 5 )]
+position = Vector2( 349, -346 )
 
 [connection signal="shoot" from="Player" to="Laser" method="_on_Player_shoot"]
