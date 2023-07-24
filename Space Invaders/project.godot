@@ -10,8 +10,8 @@ config_version=4
 
 [application]
 
-config/name="Space Invaders"
-run/main_scene="res://Scenes/GameScene.tscn"
+config/name="Asteroids"
+run/main_scene="res://Scenes/MenuScene.tscn"
 config/icon="res://icon.png"
 
 [global]
