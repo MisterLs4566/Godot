@@ -6,10 +6,10 @@
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Player" parent="." instance=ExtResource( 1 )]
-
-[node name="Laser" parent="Player" instance=ExtResource( 3 )]
+[node name="Laser" parent="." instance=ExtResource( 3 )]
 visible = false
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 scale = Vector2( 6, 6 )
@@ -27,4 +27,4 @@ drag_margin_bottom = 0.0
 position = Vector2( -560, -286 )
 rotation = -3.14159
 
-[connection signal="shoot" from="Player" to="Player/Laser" method="_on_Player_shoot"]
+[connection signal="shoot" from="Player" to="Laser" method="_on_Player_shoot"]

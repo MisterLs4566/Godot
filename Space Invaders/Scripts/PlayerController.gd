@@ -53,7 +53,7 @@ func input():
 	if Input.is_action_just_pressed("ui_down"):
 		$AnimatedSprite.play("Idle")
 		slowDown = true
-	if Input.is_action_just_released("ui_accept"):
+	if Input.is_action_pressed("ui_accept"):
 		emit_signal("shoot")
 	
 	
