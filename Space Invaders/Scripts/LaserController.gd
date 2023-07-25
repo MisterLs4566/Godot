@@ -6,6 +6,7 @@ var oldPosition = Vector2()
 var player
 var isShooting = false
 var maxDistance = 350
+var audioPlayer
 
 var collision
 var collisionCollider

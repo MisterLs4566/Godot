@@ -18,4 +18,4 @@ func _ready():
 
 
 func _on_Button_pressed():
-	get_tree().change_scene_to(load("res://Scenes/GameScene.tscn"))
+	get_tree().change_scene_to(load("res://Scenes/Level01.tscn"))
