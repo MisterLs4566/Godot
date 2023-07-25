@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Prefabs/GameCamera.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Animated Tiles/Barrier1.tres" type="Texture" id=6]
 [ext_resource path="res://Prefabs/Enemy.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Animated Tiles/ArrowLeft.tres" type="Texture" id=8]
+[ext_resource path="res://Prefabs/GameUI.tscn" type="PackedScene" id=9]
 
 [sub_resource type="ConvexPolygonShape2D" id=4]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -105,5 +106,7 @@ position = Vector2( -1680, 400 )
 
 [node name="Enemy2" parent="." instance=ExtResource( 7 )]
 position = Vector2( -1680, -240 )
+
+[node name="CanvasLayer" parent="." instance=ExtResource( 9 )]
 
 [connection signal="shoot" from="Player" to="Laser" method="_on_Player_shoot"]

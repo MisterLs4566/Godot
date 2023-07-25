@@ -47,6 +47,7 @@ func _on_Player_shoot():
 	if isShooting == false:
 		$AudioStreamPlayer2D.stream = laserSound
 		$AudioStreamPlayer2D.play()
+		$AnimatedSprite.play("default")	
 		position = player.position
 		oldPosition = position
 		isShooting = true
