@@ -32,10 +32,9 @@ func input():
 func _process(delta):
 	input()
 	look_at(get_global_mouse_position())
-	rotation_degrees += 90
+	rotation_degrees += 90	
 	if start == false:
 		return
-		
 	if slowDown == false:
 		move_and_slide(velocity* speed)
 	else:

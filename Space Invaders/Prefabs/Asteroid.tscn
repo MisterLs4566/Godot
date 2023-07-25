@@ -18,6 +18,7 @@ animations = [ {
 radius = 37.3226
 
 [node name="Asteroid" type="KinematicBody2D"]
+modulate = Color( 0.596078, 0.596078, 0.596078, 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 10, 10 )
