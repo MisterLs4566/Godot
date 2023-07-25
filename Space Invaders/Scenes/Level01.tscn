@@ -79,6 +79,17 @@ text = "PRESS SPACE TO SHOOT"
 align = 1
 valign = 1
 
+[node name="TutorialLabelLevel1" type="Label" parent="."]
+margin_left = -652.0
+margin_top = -240.0
+margin_right = 172.0
+margin_bottom = -176.0
+custom_fonts/font = SubResource( 1 )
+custom_styles/normal = SubResource( 2 )
+text = "LEVEL 01"
+align = 1
+valign = 1
+
 [node name="Laser" parent="." instance=ExtResource( 5 )]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
