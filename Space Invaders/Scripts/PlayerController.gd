@@ -15,6 +15,7 @@ var collision
 var collisionCollider
 var fasterSound
 var fasterStream2D
+var coll
 
 func _ready():
 	healthLabel = get_node("../GameUI").get_child(1)
@@ -56,13 +57,16 @@ func _process(delta):
 		
 	if get_slide_count() != 0:
 		for i in range(0, get_slide_count()):
-				collision = get_slide_collision(i).collider as KinematicBody2D
-				collisionCollider = get_slide_collision(i).collider as CollisionObject2D
-				if typeof(collisionCollider) != 0:
-					if collisionCollider.collision_layer == 2:
-						emit_signal("hurt")
-				else:
-					return
+			collision = get_slide_collision(i).collider as KinematicBody2D
+			collisionCollider = get_slide_collision(i).collider as CollisionObject2D
+			coll = get_slide_collision(i).collider
+			if typeof(collisionCollider) != 0:
+				if collisionCollider.collision_layer == 2:
+					emit_signal("hurt")
+			elif(coll.is_in_group("collisionTiles")):
+				emit_signal("hurt")
+			else:
+				return
 func _on_Player_hurt():
 	if hit == false:
 		hit = true
