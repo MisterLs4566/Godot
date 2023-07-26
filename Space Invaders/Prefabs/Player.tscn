@@ -48,3 +48,8 @@ playing = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2( 5, 5 )
 shape = SubResource( 7 )
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+
+[node name="Listener2D" type="Listener2D" parent="."]
+current = true

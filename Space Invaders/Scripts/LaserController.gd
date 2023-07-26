@@ -13,39 +13,43 @@ var collisionCollider
 
 var laserSound
 var explosionSound
+var explosionSoundEnemy
 
+var volume
+
+signal explosion
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	player = get_node("../Player")
 	laserSound = preload("res://Sounds/Laser1FireSound.wav")
-	explosionSound = preload("res://Sounds/Laser1ExplosionSound.wav")	
+	explosionSound = preload("res://Sounds/Laser1ExplosionSound.wav")
+	explosionSoundEnemy = preload("res://Sounds/Enemy1Explosion.wav")
+	volume = $AudioStreamPlayer2D.volume_db	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	move_and_slide(velocity.rotated(rotation).normalized() * speed)
 	
 	if isShooting == true:
-		if position.distance_to(oldPosition) > maxDistance:
-				velocity = Vector2.ZERO
-				$AudioStreamPlayer2D.stream = explosionSound
-				$AudioStreamPlayer2D.play()
-				$AnimatedSprite.play("Explosion")
-				return
+		if (position.distance_to(oldPosition) > maxDistance):
+			"""Stoppen wenn am Explodieren?"""
+			#velocity = Vector2.ZERO
+			$AnimatedSprite.play("Explosion")
+			emit_signal("explosion")
 	if get_slide_count() != 0:
 		for i in range(0, get_slide_count()):
 				collision = get_slide_collision(i).collider as KinematicBody2D
 				collisionCollider = get_slide_collision(i).collider as CollisionObject2D
-				
 				if collisionCollider.collision_layer == 2:
+					collision.get_child(2).set_stream(explosionSoundEnemy)
+					collision.get_child(2).play(0)
 					collision.get_child(0).play("Explosion")
 					velocity = Vector2.ZERO
-					$AudioStreamPlayer2D.stream = explosionSound
-					$AudioStreamPlayer2D.play()
 					$AnimatedSprite.play("Explosion")
 
 func _on_Player_shoot():
 	if isShooting == false:
-		$AudioStreamPlayer2D.stream = laserSound
+		$AudioStreamPlayer2D.set_stream(laserSound)
 		$AudioStreamPlayer2D.play()
 		$AnimatedSprite.play("default")	
 		position = player.position
@@ -55,11 +59,15 @@ func _on_Player_shoot():
 		rotation_degrees = player.rotation_degrees
 		visible = true
 		velocity.y = -1
-		
-			
 
 func _on_AnimatedSprite_animation_finished():
 	if isShooting == true and $AnimatedSprite.get_animation() == "Explosion":
 		isShooting = false
+		velocity = Vector2.ZERO
 		visible = false
 		$AnimatedSprite.play("default")	
+
+
+func _on_Laser_explosion():
+	$AudioStreamPlayer2D.set_stream(explosionSound)
+	$AudioStreamPlayer2D.play()

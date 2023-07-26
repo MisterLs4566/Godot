@@ -107,6 +107,7 @@ position = Vector2( -1680, 400 )
 [node name="Enemy2" parent="." instance=ExtResource( 7 )]
 position = Vector2( -1680, -240 )
 
-[node name="CanvasLayer" parent="." instance=ExtResource( 9 )]
+[node name="GameUI" parent="." instance=ExtResource( 9 )]
 
+[connection signal="hurt" from="Player" to="Player" method="_on_Player_hurt"]
 [connection signal="shoot" from="Player" to="Laser" method="_on_Player_shoot"]
