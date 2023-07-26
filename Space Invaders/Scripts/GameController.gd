@@ -10,7 +10,5 @@ extends Node2D
 func _ready():
 	#OS.window_fullscreen = true
 	VisualServer.set_default_clear_color(Color(0, 0, 0))
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+	"""Lautstärke"""
+	#AudioServer.set_bus_volume_db(AudioServer.get_bus_index("GameSounds"), -40)
