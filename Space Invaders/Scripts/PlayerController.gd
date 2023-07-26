@@ -13,15 +13,16 @@ var hit = false
 var collision
 var collisionCollider
 var fasterSound
+var fasterStream2D
 
 func _ready():
 	healthLabel = get_node("../GameUI").get_child(1)
 	fasterSound = preload("res://Sounds/PlayerFasterSound.wav")
+	fasterStream2D = get_node("Stream2DFaster")
 	
 func input():
 	if Input.is_action_just_pressed("ui_up"):
-		$AudioStreamPlayer2D.set_stream(fasterSound)
-		$AudioStreamPlayer2D.play()
+		fasterStream2D.play()
 		slowDown = false
 		start = true
 		"""Richtung setzen"""
