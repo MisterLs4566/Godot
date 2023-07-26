@@ -5,6 +5,7 @@ var velocity = Vector2(0, -1)
 signal shoot
 signal killed
 signal hurt
+signal destroyed
 var slowDown = false
 var start = false
 var lives = 6.5
@@ -30,9 +31,11 @@ func input():
 		velocity.y = -1
 		velocity = velocity.rotated(rotation).normalized()
 		"""Animation setzen"""
-		$AnimatedSprite.play("Movement")
+		if(hit == false):
+			$AnimatedSprite.play("Movement")
 	if Input.is_action_just_pressed("ui_down"):
-		$AnimatedSprite.play("Idle")
+		if(hit == false):
+			$AnimatedSprite.play("Idle")
 		slowDown = true
 	if Input.is_action_pressed("ui_accept"):
 		emit_signal("shoot")
@@ -66,3 +69,19 @@ func _on_Player_hurt():
 		lives -= 0.5
 		healthLabel.rect_scale.x = lives
 		velocity = Vector2.ZERO
+		$AnimatedSprite.play("Hurt")
+		
+		if(lives == 0):
+			emit_signal("destroyed")
+			
+
+
+func _on_AnimatedSprite_animation_finished():
+	if $AnimatedSprite.get_animation() == "Hurt":
+		hit = false
+		$AnimatedSprite.play("Idle")
+	elif $AnimatedSprite.get_animation() == "Explosion":
+		get_tree().reload_current_scene()
+
+func _on_Player_destroyed():
+	$AnimatedSprite.play("Explosion")

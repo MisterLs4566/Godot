@@ -42,6 +42,7 @@ func _process(delta):
 				if collisionCollider.collision_layer == 2:
 					collision.get_child(2).play()
 					collision.get_child(0).play("Explosion")
+					collision.get_child(1).disabled = true
 					velocity = Vector2.ZERO
 					$AnimatedSprite.play("Explosion")
 					return
