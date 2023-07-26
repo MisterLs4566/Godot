@@ -7,7 +7,6 @@ var enemyExplosionStream2D
 
 func _ready():
 	player = get_node("../Player")
-	explosionSound = preload("res://Sounds/Enemy1Explosion.wav")
 	enemyExplosionStream2D = get_node("Stream2DExplosion")
 
 func _process(delta):

@@ -47,9 +47,9 @@ func _process(delta):
 	if start == false:
 		return
 	if slowDown == false:
-		move_and_slide(velocity* speed)
+		move_and_slide(velocity * speed)
 	else:
-		move_and_slide(velocity* speed/2)
+		move_and_slide(velocity * speed/2)
 		
 	if get_slide_count() != 0:
 		for i in range(0, get_slide_count()):
