@@ -52,7 +52,7 @@ script = ExtResource( 2 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 10, 10 )
 frames = SubResource( 1 )
-frame = 1
+frame = 2
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -61,6 +61,7 @@ shape = SubResource( 6 )
 
 [node name="Stream2DExplosion" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 4 )
+bus = "GameSounds"
 
 [connection signal="explosion" from="." to="." method="_on_Enemy_explosion"]
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]

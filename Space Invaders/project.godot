@@ -14,10 +14,6 @@ config/name="Asteroids"
 run/main_scene="res://Scenes/Level01.tscn"
 config/icon="res://icon.png"
 
-[audio]
-
-default_bus_layout=""
-
 [display]
 
 window/size/width=1920
