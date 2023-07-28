@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/GameController.gd" type="Script" id=2]
+[ext_resource path="res://Prefabs/GameBorder.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Prefabs/Circle.tscn" type="PackedScene" id=4]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Circle" parent="." instance=ExtResource( 4 )]
+position = Vector2( 0, -800 )
+
+[node name="GameBorder" parent="." instance=ExtResource( 3 )]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 2, 2 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+physics_interpolation_mode = 2
+position = Vector2( 0, 915 )
+__meta__ = {
+"_edit_group_": true
+}
