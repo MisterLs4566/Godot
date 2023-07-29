@@ -52,4 +52,5 @@ position = Vector2( 0, 915 )
 [connection signal="startTimer" from="." to="." method="_on_Node2D_startTimer"]
 [connection signal="startTimer" from="." to="CountdownLabel" method="_on_Node2D_startTimer"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="Timer" to="CountdownLabel" method="_on_Timer_timeout"]
 [connection signal="timeout" from="CountdownLabel/Timer" to="CountdownLabel" method="_on_Timer_timeout"]

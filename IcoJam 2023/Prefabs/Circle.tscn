@@ -249,19 +249,17 @@ animations = [ {
 
 [sub_resource type="CircleShape2D" id=76]
 
-[node name="Circle" type="KinematicBody2D"]
+[node name="Circle" type="KinematicBody2D" groups=["Circle"]]
 physics_interpolation_mode = 2
+show_behind_parent = true
 position = Vector2( -560, -640 )
 collision_layer = 2
 collision_mask = 0
 script = ExtResource( 5 )
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="." instance=ExtResource( 1 )]
-scale = Vector2( 10, 10 )
+[node name="AnimatedSprite" parent="." instance=ExtResource( 1 )]
 frames = SubResource( 28 )
-animation = "CircleRight"
-frame = 5
-playing = true
+frame = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2( 8, 8 )

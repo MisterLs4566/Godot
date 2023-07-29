@@ -249,7 +249,7 @@ animations = [ {
 
 [sub_resource type="CircleShape2D" id=76]
 
-[node name="Rect" type="KinematicBody2D"]
+[node name="Rect" type="KinematicBody2D" groups=["Rect"]]
 physics_interpolation_mode = 2
 position = Vector2( 160, -640 )
 collision_layer = 2
@@ -259,7 +259,7 @@ script = ExtResource( 5 )
 [node name="AnimatedSprite" parent="." instance=ExtResource( 1 )]
 frames = SubResource( 28 )
 animation = "RectRight"
-frame = 2
+frame = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2( 8, 8 )
