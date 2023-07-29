@@ -51,11 +51,12 @@ func _on_AnimatedSprite_animation_finished():
 		$AnimatedSprite.play("HeartRight")
 	elif($AnimatedSprite.get_animation() == "HeartRight"):
 		$AnimatedSprite.play("HeartLeft")
+		
+func _on_Sprite_collectCircle():
+	print("test")
 
+func _on_Sprite_collectRect():
+	pass
 
-func _on_Player_body_entered(body):
-	if body.is_in_group("Circle"):
-		linear_velocity = Vector2.ZERO
-		print("uff")
-		body.queue_free()
-		position.y = oldPos.y
+func _on_Sprite_collectHeart():
+	pass

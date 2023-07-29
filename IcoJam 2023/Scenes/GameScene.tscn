@@ -45,7 +45,6 @@ current = true
 zoom = Vector2( 2, 2 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-physics_interpolation_mode = 2
 position = Vector2( 0, 915 )
 
 [connection signal="gameStart" from="." to="." method="_on_Node2D_gameStart"]

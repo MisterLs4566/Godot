@@ -12,7 +12,7 @@ var heart
 
 func _ready():
 	VisualServer.set_default_clear_color(Color("#2697f0"))
-	circle = load("res://Prefabs/Circle.tscn")
+	circle = load("res://Prefabs/Circle2.tscn")
 	rect = preload("res://Prefabs/Rect.tscn")
 	heart = preload("res://Prefabs/Heart.tscn")
 	emit_signal("startTimer")
