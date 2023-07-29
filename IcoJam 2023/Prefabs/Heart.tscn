@@ -251,15 +251,17 @@ animations = [ {
 
 [node name="Heart" type="KinematicBody2D"]
 physics_interpolation_mode = 2
-position = Vector2( 0, -960 )
+position = Vector2( -160, -640 )
 collision_layer = 2
 collision_mask = 0
 script = ExtResource( 5 )
 
-[node name="AnimatedSprite" parent="." instance=ExtResource( 1 )]
+[node name="AnimatedSprite" type="AnimatedSprite" parent="." instance=ExtResource( 1 )]
+scale = Vector2( 10, 10 )
 frames = SubResource( 28 )
 animation = "HeartRight"
-frame = 3
+frame = 6
+playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2( 8, 8 )
