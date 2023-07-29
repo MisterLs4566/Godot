@@ -9,7 +9,6 @@ bounce = 0.1
 absorbent = true
 
 [sub_resource type="CircleShape2D" id=38]
-radius = 12.7506
 
 [node name="Player" type="RigidBody2D" groups=["Player"]]
 physics_interpolation_mode = 2

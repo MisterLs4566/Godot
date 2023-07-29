@@ -6,13 +6,14 @@ signal resume
 var level = 0
 
 var circle
-var circleObject
+var SObject
 var rect
 var heart
+var spawnCooldown
 
 func _ready():
 	VisualServer.set_default_clear_color(Color("#2697f0"))
-	circle = load("res://Prefabs/Circle2.tscn")
+	circle = load("res://Prefabs/Circle.tscn")
 	rect = preload("res://Prefabs/Rect.tscn")
 	heart = preload("res://Prefabs/Heart.tscn")
 	emit_signal("startTimer")
@@ -37,9 +38,13 @@ func _on_Timer_timeout():
 
 """Wenn das Spiel startet"""
 func _on_Node2D_gameStart():
-	circleObject = circle.instance()
-	$GameBorder.add_child(circleObject)
-	circleObject.position = Vector2(0, -900)
-	connect("gameStart", circleObject, "_on_Node2D_gameStart")
-	connect("resume", circleObject, "_on_Node2D_resume")
+	spawn(Vector2(0, -900), rect)
 	emit_signal("resume")
+
+func spawn(position, type):
+	SObject = type.instance()
+	$GameBorder.add_child(SObject)
+	SObject.position = position
+	connect("gameStart", SObject, "_on_Node2D_gameStart")
+	connect("resume", SObject, "_on_Node2D_resume")
+	

@@ -3,10 +3,11 @@ extends RigidBody2D
 var speed = 100
 var velocity = Vector2.ZERO
 var oldPos
+var type
 
 func _ready():
 	oldPos = position
-
+	type = "Circle"
 func input():
 	
 	"""Animation"""
@@ -14,12 +15,15 @@ func input():
 	if (Input.is_action_just_pressed("ui_accept")):
 		if($AnimatedSprite.animation == "CircleLeft" or ($AnimatedSprite.animation == "CircleRight")):
 			$AnimatedSprite.play("RectRight")
+			type = "Rect"
 			VisualServer.set_default_clear_color(Color("#135740"))
 		elif($AnimatedSprite.animation == "RectLeft" or ($AnimatedSprite.animation == "RectRight")):
 			$AnimatedSprite.play("HeartRight")
+			type = "Heart"
 			VisualServer.set_default_clear_color(Color("#403578"))
 		elif($AnimatedSprite.animation == "HeartLeft" or ($AnimatedSprite.animation == "HeartRight")):
 			$AnimatedSprite.play("CircleRight")
+			type = "Circle"
 			VisualServer.set_default_clear_color(Color("#2697f0"))
 	
 	"""Movement"""
@@ -52,11 +56,14 @@ func _on_AnimatedSprite_animation_finished():
 	elif($AnimatedSprite.get_animation() == "HeartRight"):
 		$AnimatedSprite.play("HeartLeft")
 		
-func _on_Sprite_collectCircle():
-	print("test")
+func _on_Sprite_collectCircle(object):
+	if self.type == object.type:
+		object.queue_free()
 
-func _on_Sprite_collectRect():
-	pass
+func _on_Sprite_collectRect(object):
+	if self.type == object.type:
+		object.queue_free()
 
-func _on_Sprite_collectHeart():
-	pass
+func _on_Sprite_collectHeart(object):
+	if self.type == object.type:
+		object.queue_free()
