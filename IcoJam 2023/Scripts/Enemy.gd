@@ -12,7 +12,8 @@ signal collectHeart
 
 func _ready():
 	"""INDEX des Spielers muss stimmen"""
-	player = get_node("../Player")
+	print(self.get_path())
+	player = get_node("/root/Node2D/Player")
 	if is_in_group("Circle"):
 		type = "Circle"
 	elif is_in_group("Rect"):
