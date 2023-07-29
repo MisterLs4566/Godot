@@ -1,15 +1,18 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/GameController.gd" type="Script" id=2]
 [ext_resource path="res://Prefabs/GameBorder.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Prefabs/Circle.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Prefabs/Heart.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Prefabs/Rect.tscn" type="PackedScene" id=6]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 2 )
 
-[node name="Circle" parent="." instance=ExtResource( 4 )]
-position = Vector2( 0, -800 )
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.001
+one_shot = true
 
 [node name="GameBorder" parent="." instance=ExtResource( 3 )]
 
@@ -23,3 +26,21 @@ position = Vector2( 0, 915 )
 __meta__ = {
 "_edit_group_": true
 }
+
+[node name="Heart" parent="." instance=ExtResource( 5 )]
+position = Vector2( -160, -640 )
+
+[node name="Circle" parent="." instance=ExtResource( 4 )]
+position = Vector2( -560, -640 )
+
+[node name="Rect" parent="." instance=ExtResource( 6 )]
+position = Vector2( 160, -640 )
+
+[node name="Label" type="Label" parent="."]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "3."
+
+[connection signal="gameStart" from="." to="." method="_on_Node2D_gameStart"]
+[connection signal="startTimer" from="." to="." method="_on_Node2D_startTimer"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
