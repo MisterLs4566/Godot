@@ -93,8 +93,12 @@ text = "3"
 align = 1
 script = ExtResource( 3 )
 
-[node name="IntroductionLabel" type="Label" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
 visible = false
+follow_viewport_enable = true
+
+[node name="IntroductionLabel" type="Label" parent="CanvasLayer"]
 margin_left = -1408.0
 margin_top = -320.0
 margin_right = 1408.0
@@ -106,8 +110,7 @@ TO SWITCH"
 align = 1
 valign = 1
 
-[node name="IntroductionImage" type="AnimatedSprite" parent="."]
-visible = false
+[node name="IntroductionImage" type="AnimatedSprite" parent="CanvasLayer"]
 position = Vector2( 0, -448 )
 scale = Vector2( 10, 10 )
 frames = SubResource( 5 )

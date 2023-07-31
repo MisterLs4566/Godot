@@ -46,10 +46,10 @@ func _on_Node2D_startTimer():
 """Wenn 3 Sekunden Timer abgelaufen"""
 func _on_Timer_timeout():
 	if level == 1:
-		$IntroductionLabel.visible = true
+		$CanvasLayer.visible = true
 	elif level == 2:
-		$IntroductionLabel.visible = true
-		$IntroductionImage.visible = true
+		$CanvasLayer.visible = true
+		$CanvasLayer.visible = true
 	if stopped == true:
 		stopped = false
 		emit_signal("resume")
