@@ -1,0 +1,142 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://Scripts/scoreController.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/CountdownLabelController.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/HealthController.gd" type="Script" id=3]
+[ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Prefabs/Trophy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Prefabs/Rect.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Prefabs/GameBorder.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Fonts/System.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://Scripts/GameController.gd" type="Script" id=9]
+[ext_resource path="res://Scenes/TimerControllerCount.gd" type="Script" id=10]
+[ext_resource path="res://Scenes/TimerControllerCount3.gd" type="Script" id=11]
+[ext_resource path="res://Prefabs/Trap.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Prefabs/Heart.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Prefabs/Circle.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Assets/Introduction.png" type="Texture" id=15]
+
+[sub_resource type="DynamicFont" id=1]
+size = 256
+outline_size = 12
+outline_color = Color( 1, 0, 0, 1 )
+extra_spacing_top = 40
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 512
+outline_size = 16
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 8 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+anti_aliasing = false
+anti_aliasing_size = 0.01
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 15 )
+region = Rect2( 0, 0, 64, 64 )
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ SubResource( 4 ) ],
+"loop": true,
+"name": "Introduction",
+"speed": 5.0
+} ]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 9 )
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+script = ExtResource( 11 )
+
+[node name="LevelLabel" type="Label" parent="."]
+margin_left = -1760.0
+margin_top = -960.0
+margin_right = -817.0
+margin_bottom = -653.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "Level 2"
+align = 1
+script = ExtResource( 1 )
+
+[node name="CountdownLabel" type="Label" parent="."]
+margin_left = -236.0
+margin_top = -256.0
+margin_right = 237.0
+margin_bottom = 257.0
+rect_pivot_offset = Vector2( 236, 256 )
+custom_fonts/font = SubResource( 2 )
+custom_styles/normal = SubResource( 3 )
+align = 1
+valign = 1
+script = ExtResource( 2 )
+
+[node name="Timer" type="Timer" parent="CountdownLabel"]
+script = ExtResource( 10 )
+
+[node name="GameBorder" parent="." instance=ExtResource( 7 )]
+
+[node name="HealthLabel" type="Label" parent="."]
+margin_left = 1440.0
+margin_top = -960.0
+margin_right = 1617.0
+margin_bottom = -653.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "3"
+align = 1
+script = ExtResource( 3 )
+
+[node name="IntroductionLabel" type="Label" parent="."]
+visible = false
+margin_left = -1408.0
+margin_top = -320.0
+margin_right = 1408.0
+margin_bottom = 341.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "SPACE / MOUSELEFT
+TO SWITCH"
+align = 1
+valign = 1
+
+[node name="IntroductionImage" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( 0, -448 )
+scale = Vector2( 10, 10 )
+frames = SubResource( 5 )
+animation = "Introduction"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 2, 2 )
+
+[node name="Trap" parent="." instance=ExtResource( 12 )]
+position = Vector2( -1600, -1408 )
+
+[node name="Circle" parent="." instance=ExtResource( 14 )]
+position = Vector2( -384, -6784 )
+
+[node name="Rect" parent="." instance=ExtResource( 6 )]
+position = Vector2( -1408, -3712 )
+
+[node name="Heart" parent="." instance=ExtResource( 13 )]
+position = Vector2( -896, -5248 )
+
+[node name="Rect2" parent="." instance=ExtResource( 6 )]
+position = Vector2( 128, -8320 )
+
+[node name="Trophy" parent="." instance=ExtResource( 5 )]
+position = Vector2( 1152, -11392 )
+
+[node name="Player" parent="." instance=ExtResource( 4 )]
+position = Vector2( 0, 915 )
+
+[node name="Heart2" parent="." instance=ExtResource( 13 )]
+position = Vector2( 640, -9856 )

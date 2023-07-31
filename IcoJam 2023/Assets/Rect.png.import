@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/GameBorder.png-26418ab427c13e39daf33e91a7e8c31b.stex"
+path="res://.import/Rect.png-744ab62953b7e46b79528d195cf6461c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/GameBorder.png"
-dest_files=[ "res://.import/GameBorder.png-26418ab427c13e39daf33e91a7e8c31b.stex" ]
+source_file="res://Assets/Rect.png"
+dest_files=[ "res://.import/Rect.png-744ab62953b7e46b79528d195cf6461c.stex" ]
 
 [params]
 

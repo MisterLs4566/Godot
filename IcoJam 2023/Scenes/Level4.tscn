@@ -1,0 +1,183 @@
+[gd_scene load_steps=24 format=2]
+
+[ext_resource path="res://Prefabs/GameBorder.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/PlayerController.gd" type="Script" id=2]
+[ext_resource path="res://Fonts/System.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Assets/Introduction.png" type="Texture" id=4]
+[ext_resource path="res://Scripts/scoreController.gd" type="Script" id=5]
+[ext_resource path="res://Scenes/TimerControllerCount.gd" type="Script" id=6]
+[ext_resource path="res://Scenes/TimerControllerCount3.gd" type="Script" id=7]
+[ext_resource path="res://Scripts/GameController.gd" type="Script" id=8]
+[ext_resource path="res://Scripts/CountdownLabelController.gd" type="Script" id=9]
+[ext_resource path="res://Scripts/HealthController.gd" type="Script" id=10]
+[ext_resource path="res://Prefabs/Trap.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Prefabs/Trophy.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Prefabs/Circle.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Prefabs/Rect.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Prefabs/Heart.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Prefabs/PefabSprite.tscn" type="PackedScene" id=16]
+
+[sub_resource type="DynamicFont" id=5]
+size = 256
+outline_size = 12
+outline_color = Color( 1, 0, 0, 1 )
+extra_spacing_top = 40
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 512
+outline_size = 16
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 3 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+anti_aliasing = false
+anti_aliasing_size = 0.01
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 64, 64 )
+
+[sub_resource type="SpriteFrames" id=8]
+animations = [ {
+"frames": [ SubResource( 4 ) ],
+"loop": true,
+"name": "Introduction",
+"speed": 5.0
+} ]
+
+[sub_resource type="PhysicsMaterial" id=57]
+friction = 0.0
+bounce = 0.1
+absorbent = true
+
+[sub_resource type="CircleShape2D" id=38]
+radius = 12.7506
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 8 )
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+script = ExtResource( 7 )
+
+[node name="LevelLabel" type="Label" parent="."]
+margin_left = -1760.0
+margin_top = -960.0
+margin_right = -817.0
+margin_bottom = -653.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 5 )
+text = "Level 4"
+align = 1
+script = ExtResource( 5 )
+
+[node name="CountdownLabel" type="Label" parent="."]
+margin_left = -236.0
+margin_top = -256.0
+margin_right = 237.0
+margin_bottom = 257.0
+rect_pivot_offset = Vector2( 236, 256 )
+custom_fonts/font = SubResource( 6 )
+custom_styles/normal = SubResource( 7 )
+align = 1
+valign = 1
+script = ExtResource( 9 )
+
+[node name="Timer" type="Timer" parent="CountdownLabel"]
+script = ExtResource( 6 )
+
+[node name="GameBorder" parent="." instance=ExtResource( 1 )]
+
+[node name="HealthLabel" type="Label" parent="."]
+margin_left = 1440.0
+margin_top = -960.0
+margin_right = 1617.0
+margin_bottom = -653.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 5 )
+text = "3"
+align = 1
+script = ExtResource( 10 )
+
+[node name="IntroductionLabel" type="Label" parent="."]
+visible = false
+margin_left = -1408.0
+margin_top = -320.0
+margin_right = 1408.0
+margin_bottom = 341.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 5 )
+text = "SPACE / MOUSELEFT
+TO SWITCH"
+align = 1
+valign = 1
+
+[node name="IntroductionImage" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( 0, -448 )
+scale = Vector2( 10, 10 )
+frames = SubResource( 8 )
+animation = "Introduction"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 2, 2 )
+
+[node name="Player" type="RigidBody2D" parent="." groups=["Player"]]
+physics_interpolation_mode = 2
+position = Vector2( 0, 915 )
+physics_material_override = SubResource( 57 )
+gravity_scale = 0.0
+contacts_reported = 1
+contact_monitor = true
+linear_damp = 1.75
+angular_damp = 0.0
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite" parent="Player" instance=ExtResource( 16 )]
+scale = Vector2( 4, 4 )
+frame = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" groups=["Player"]]
+scale = Vector2( 12.5, 12.5 )
+shape = SubResource( 38 )
+
+[node name="Timer" type="Timer" parent="Player"]
+
+[node name="Rect" parent="." instance=ExtResource( 14 )]
+position = Vector2( -320, -1600 )
+
+[node name="Circle" parent="." instance=ExtResource( 13 )]
+position = Vector2( -6.10352e-05, -2560 )
+
+[node name="Rect2" parent="." instance=ExtResource( 14 )]
+position = Vector2( 320, -1600 )
+
+[node name="Trap" parent="." instance=ExtResource( 11 )]
+position = Vector2( 3.63798e-12, -7680 )
+
+[node name="Rect4" parent="." instance=ExtResource( 14 )]
+position = Vector2( 480, -7680 )
+scale = Vector2( 1.5625, 1.5625 )
+
+[node name="Trophy" parent="." instance=ExtResource( 12 )]
+position = Vector2( 520, -10240 )
+
+[node name="Circle2" parent="." instance=ExtResource( 13 )]
+position = Vector2( 448, -6400 )
+scale = Vector2( 1.95313, 1.95313 )
+
+[node name="Rect3" parent="." instance=ExtResource( 14 )]
+position = Vector2( -1280, -5120 )
+scale = Vector2( 1.5625, 1.5625 )
+
+[node name="Heart" parent="." instance=ExtResource( 15 )]
+position = Vector2( 1600, -3840 )
+
+[node name="Trap2" parent="." instance=ExtResource( 11 )]
+position = Vector2( 960, -7680 )
+
+[connection signal="timeout" from="Player/Timer" to="Player" method="_on_Timer_timeout"]

@@ -17,13 +17,18 @@ physics_material_override = SubResource( 57 )
 gravity_scale = 0.0
 contacts_reported = 1
 contact_monitor = true
-linear_damp = 2.5
+linear_damp = 1.75
 angular_damp = 0.0
 script = ExtResource( 4 )
 
 [node name="AnimatedSprite" parent="." instance=ExtResource( 1 )]
-frame = 6
+scale = Vector2( 4, 4 )
+animation = "Rect"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["Player"]]
-scale = Vector2( 8, 8 )
+scale = Vector2( 12.5, 12.5 )
 shape = SubResource( 38 )
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
