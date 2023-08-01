@@ -94,12 +94,11 @@ playing = true
 scale = Vector2( 5, 5 )
 shape = SubResource( 7 )
 
-[node name="Stream2DFaster" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioStream2DBoost" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 4 )
 bus = "GameSounds"
 
 [node name="Listener2D" type="Listener2D" parent="."]
 current = true
 
-[connection signal="destroyed" from="." to="." method="_on_Player_destroyed"]
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]

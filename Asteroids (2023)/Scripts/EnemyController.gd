@@ -1,19 +1,28 @@
 extends KinematicBody2D
 
+"""nodes"""
 var player
-signal explosion
-var explosionSound
 var enemyExplosionStream2D
+var maxPlayerDistance
+
+"""signals"""
+signal explosion
 
 func _ready():
-	player = get_node("../Player")
+	player = get_node("/root/Node2D/Player")
 	enemyExplosionStream2D = get_node("Stream2DExplosion")
-
+	maxPlayerDistance = 1000
+	
+	"""connect signals"""
+	
+	connect("explosion", self, "_on_Enemy_explosion")
 func _process(delta):
-	if position.distance_to(player.position) < 1000:
+	"""rotate toward player"""
+	if position.distance_to(player.position) < maxPlayerDistance:
 		look_at(player.position)
 		rotation_degrees += 90
 	
+	"""delete if not existing"""
 	if(visible == false and enemyExplosionStream2D.playing == false):
 		queue_free()
 

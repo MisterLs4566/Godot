@@ -1,40 +1,49 @@
 extends KinematicBody2D
 
+"""nodes"""
+
+var player
+
+"""variables"""
+
 var speed = 0
 var velocity = Vector2()
 var oldPosition = Vector2()
-var player
-var isShooting = false
 var maxDistance = 350
-var audioPlayer
+
+"""switches"""
+
+var isShooting = false
+
+"""KinematicBody2D"""
 
 var collision
+
+"""CollisionObject2D"""
+
 var collisionCollider
+
+"""preloads"""
 
 var laserSound
 var explosionSound
 var explosionSoundEnemy
 
-var volume
+"""signals"""
 
 signal explosion
-var laserStream2D
-var laserExplosionStream2D
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	player = get_node("../Player")
-	laserStream2D = get_node("Stream2DLaser")
-	laserExplosionStream2D = get_node("Stream2DLaserExplosion")
-	
+	player = get_node("/root/Node2D/Player")
 	laserSound = preload("res://Sounds/Laser1FireSound.wav")
 	explosionSound = preload("res://Sounds/Laser1ExplosionSound.wav")
 	explosionSoundEnemy = preload("res://Sounds/Enemy1Explosion.wav")
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	move_and_slide(velocity.rotated(rotation).normalized() * speed)
 	
+	"""connect signals"""
+	
+	connect("explosion", self, "_on_Laser_explosion")
+
+func collision():
 	if get_slide_count() != 0:
 		for i in range(0, get_slide_count()):
 				collision = get_slide_collision(i).collider as KinematicBody2D
@@ -46,6 +55,10 @@ func _process(delta):
 					velocity = Vector2.ZERO
 					$AnimatedSprite.play("Explosion")
 					return
+
+func _process(delta):
+	move_and_slide(velocity.rotated(rotation).normalized() * speed)
+	collision()
 	if isShooting == true:
 		if (position.distance_to(oldPosition) > maxDistance):
 			"""Stoppen wenn am Explodieren?"""
@@ -55,7 +68,7 @@ func _process(delta):
 			
 func _on_Player_shoot():
 	if isShooting == false:
-		laserStream2D.play()
+		$AudioStream2DLaser.play()
 		$AnimatedSprite.play("default")	
 		position = player.position
 		oldPosition = position
@@ -74,5 +87,5 @@ func _on_AnimatedSprite_animation_finished():
 
 
 func _on_Laser_explosion():
-	laserExplosionStream2D.stop()
-	laserExplosionStream2D.play()
+	$AudioStream2DLaserExplosion.stop()
+	$AudioStream2DLaserExplosion.play()
