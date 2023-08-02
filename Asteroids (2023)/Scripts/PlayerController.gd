@@ -20,8 +20,8 @@ var shootKeyPressed = false
 var laserCooldown = false
 
 var lives = 6.5
-var maxProjectiles = 10
-var cooldownSalve = 0.1
+var maxProjectiles = 5000 #10 #2
+var cooldownSalve = 0.05 #0.1  #0.2
 
 """KinematicBody2D"""
 var collision
@@ -70,7 +70,6 @@ func _on_CooldownTimerSalve_timeout():
 	
 func instanciateLaser():
 	projectiles += 1
-	print(projectiles)
 	laserInstance = laser.instance()
 	laserInstance.position = position
 	scene.add_child(laserInstance)
@@ -120,16 +119,18 @@ func collision():
 				return
 
 func _process(delta):
+	print(projectiles)
 	input()
 	look_at(get_global_mouse_position())
-	rotation_degrees += 90	
+	rotation_degrees += 90
+	collision()	
 	if start == false:
 		return
 	if slowVelocity == false:
 		move_and_slide(velocity * speed)
 	else:
 		move_and_slide(velocity * speed/2)
-	collision()
+	
 				
 func _on_Player_hurt():
 	if hit == false:
