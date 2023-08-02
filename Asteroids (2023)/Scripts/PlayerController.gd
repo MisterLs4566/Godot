@@ -20,8 +20,8 @@ var shootKeyPressed = false
 var laserCooldown = false
 
 var lives = 6.5
-var maxProjectiles = 2
-var cooldownSalve = 0.2
+var maxProjectiles = 10
+var cooldownSalve = 0.1
 
 """KinematicBody2D"""
 var collision
