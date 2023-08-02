@@ -10,7 +10,7 @@ var healthLabel
 """variables"""
 var velocity = Vector2.ZERO
 var level
-var projectiles
+var projectiles = 0
 
 """switches"""
 var slowVelocity = false
@@ -20,7 +20,7 @@ var shootKeyPressed = false
 var laserCooldown = false
 
 var lives = 6.5
-var maxProjectiles = 3
+var maxProjectiles = 2
 var cooldownSalve = 0.2
 
 """KinematicBody2D"""
@@ -46,7 +46,6 @@ signal destroyed # -> self
 func _ready():
 	velocity = Vector2(0, -1)
 	level = 1
-	projectiles = 0
 	boostSound = preload("res://Sounds/PlayerBoostSound.wav")
 	menuScene = preload("res://Scenes/MenuScene.tscn")
 	playerExplosionSound = preload("res://Sounds/PlayerExplosionSound.wav")
@@ -63,7 +62,7 @@ func _ready():
 	
 func _on_CooldownTimerSalve_timeout():
 	$CooldownTimerSalve.stop()
-	if shootKeyPressed == true:
+	if shootKeyPressed == true and projectiles < maxProjectiles:
 		instanciateLaser()
 	if projectiles < maxProjectiles:
 		$CooldownTimerSalve.wait_time = cooldownSalve
@@ -97,7 +96,7 @@ func input():
 	if Input.is_action_pressed("ui_accept"):
 		shootKeyPressed = true
 		if projectiles < maxProjectiles:
-			if $CooldownTimerSalve.is_stopped() == true and laserCooldown == false:
+			if ($CooldownTimerSalve.is_stopped() == true or(projectiles == 0)) and laserCooldown == false:
 				instanciateLaser()
 				laserCooldown = true
 				$CooldownTimerSalve.wait_time = cooldownSalve

@@ -71,7 +71,8 @@ func _process(delta):
 
 func _on_AnimatedSprite_animation_finished():
 	if $AnimatedSprite.get_animation() == "Explosion":
-		player.projectiles -= 1
+		if player.projectiles > 0:
+			player.projectiles -= 1
 		if player.projectiles == 0:
 			player.laserCooldown = false
 		queue_free()
