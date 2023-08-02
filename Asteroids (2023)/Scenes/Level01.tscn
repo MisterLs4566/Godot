@@ -1,10 +1,9 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Prefabs/GameCamera.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Fonts/Minecraft.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://Scripts/GameController.gd" type="Script" id=4]
-[ext_resource path="res://Prefabs/Laser.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Animated Tiles/Barrier1.tres" type="Texture" id=6]
 [ext_resource path="res://Prefabs/Enemy.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Animated Tiles/ArrowLeft.tres" type="Texture" id=8]
@@ -58,6 +57,47 @@ font_data = ExtResource( 3 )
 [sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0, 0, 0, 1 )
 
+[sub_resource type="VisualScriptFunction" id=5]
+resource_name = "new_function"
+
+[sub_resource type="VisualScriptBuiltinFunc" id=6]
+function = 56
+
+[sub_resource type="VisualScriptVariableGet" id=7]
+var_name = "HELLOWORLD"
+
+[sub_resource type="VisualScript" id=8]
+data = {
+"base_type": "Label",
+"functions": [ {
+"data_connections": [  ],
+"function_id": -1,
+"name": "f_312843592",
+"nodes": [  ],
+"scroll": Vector2( -256.882, -251.978 ),
+"sequence_connections": [  ]
+}, {
+"data_connections": [ 3, 0, 2, 0 ],
+"function_id": 1,
+"name": "new_function",
+"nodes": [ 1, Vector2( 0, -60 ), SubResource( 5 ), 2, Vector2( 0, 20 ), SubResource( 6 ), 3, Vector2( -40, 140 ), SubResource( 7 ) ],
+"scroll": Vector2( -50, -100 ),
+"sequence_connections": [ 1, 0, 2 ]
+} ],
+"is_tool_script": false,
+"signals": [  ],
+"variables": [ {
+"default_value": null,
+"export": false,
+"hint": 0,
+"hint_string": "",
+"name": "HELLOWORLD",
+"type": 0,
+"usage": 7
+} ],
+"vs_unify": true
+}
+
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 4 )
 
@@ -80,6 +120,7 @@ custom_styles/normal = SubResource( 2 )
 text = "MOUSELEFT <-> RIGHT"
 align = 1
 valign = 1
+script = SubResource( 8 )
 
 [node name="TutorialLabelLevel1" type="Label" parent="."]
 margin_left = -800.0
@@ -91,8 +132,6 @@ custom_styles/normal = SubResource( 2 )
 text = "LEVEL 01"
 align = 1
 valign = 1
-
-[node name="Laser" parent="." instance=ExtResource( 5 )]
 
 [node name="Enemy" parent="." instance=ExtResource( 7 )]
 position = Vector2( -1680, 400 )

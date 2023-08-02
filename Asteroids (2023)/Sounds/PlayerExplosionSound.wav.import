@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/PlayerFasterSound.wav-04d8c4db8044c3c7dc0c8f821938adcb.sample"
+path="res://.import/PlayerExplosionSound.wav-bc3267296012a37e0bec963d2a976d82.sample"
 
 [deps]
 
-source_file="res://Sounds/PlayerFasterSound.wav"
-dest_files=[ "res://.import/PlayerFasterSound.wav-04d8c4db8044c3c7dc0c8f821938adcb.sample" ]
+source_file="res://Sounds/PlayerExplosionSound.wav"
+dest_files=[ "res://.import/PlayerExplosionSound.wav-bc3267296012a37e0bec963d2a976d82.sample" ]
 
 [params]
 
