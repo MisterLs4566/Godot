@@ -59,6 +59,7 @@ func _ready():
 	connect("destroyed", self, "_on_Player_destroyed")
 	connect("hurt", self, "_on_Player_hurt")
 	$CooldownTimerSalve.connect("timeout", self, "_on_CooldownTimerSalve_timeout")
+	$AnimatedSprite.connect("animation_finished", self, "_on_AnimatedSprite_animation_finished")
 	
 func _on_CooldownTimerSalve_timeout():
 	$CooldownTimerSalve.stop()
@@ -119,7 +120,7 @@ func collision():
 				return
 
 func _process(delta):
-	print(projectiles)
+	#print(projectiles)
 	input()
 	look_at(get_global_mouse_position())
 	rotation_degrees += 90
