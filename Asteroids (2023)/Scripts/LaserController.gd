@@ -3,6 +3,7 @@ extends KinematicBody2D
 """nodes"""
 
 var player
+var playerCooldownTimerSalve
 
 """variables"""
 
@@ -35,6 +36,7 @@ signal explosion
 
 func _ready():
 	player = get_node("/root/Node2D/Player")
+	playerCooldownTimerSalve = player.get_node("CooldownTimerSalve")
 	laserSound = preload("res://Sounds/Laser1FireSound.wav")
 	explosionSound = preload("res://Sounds/Laser1ExplosionSound.wav")
 	explosionSoundEnemy = preload("res://Sounds/Enemy1Explosion.wav")
@@ -56,6 +58,7 @@ func collision():
 				collision.get_child(0).play("Explosion")
 				collision.get_child(1).disabled = true
 				velocity = Vector2.ZERO
+				checkPlayerCooldown()
 				$AnimatedSprite.play("Explosion")
 				return
 
@@ -65,15 +68,22 @@ func _process(delta):
 	if isShooting == true:
 		if (position.distance_to(oldPosition) > maxDistance):
 			isShooting = false
+			checkPlayerCooldown()
 			$AnimatedSprite.play("Explosion")
 			emit_signal("explosion")
 
+func checkPlayerCooldown():
+	if player.projectiles > 0:
+			player.projectiles -= 1
+	if player.projectiles == 0:
+		player.laserCooldown = false
+		playerCooldownTimerSalve.stop()
+		#player.shootKeyPressed = false
+
 func _on_AnimatedSprite_animation_finished():
 	if $AnimatedSprite.get_animation() == "Explosion":
-		if player.projectiles > 0:
-			player.projectiles -= 1
-		if player.projectiles == 0:
-			player.laserCooldown = false
+		#checkPlayerCooldown() #eigentlich die Einstellung für den cooldown (cooldown erst aufgehoben, wenn Laser gelöscht)
+							   # =>checkPlayerCooldown an anderen Stellen im Code entfernen
 		queue_free()
 		
 

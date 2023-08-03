@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 """nodes"""
 var scene
-var laser
+var laser1
 var laserInstance
 var speed = 500
 var healthLabel
@@ -20,8 +20,8 @@ var shootKeyPressed = false
 var laserCooldown = false
 
 var lives = 6.5
-var maxProjectiles = 10 #2
-var cooldownSalve = 0.2
+var maxProjectiles = 1 #2 #10
+var cooldownSalve = 0.1 #0.2
 
 """KinematicBody2D"""
 var collision
@@ -50,7 +50,7 @@ func _ready():
 	menuScene = preload("res://Scenes/MenuScene.tscn")
 	playerExplosionSound = preload("res://Sounds/PlayerExplosionSound.wav")
 	playerHurtSound = preload("res://Sounds/PlayerHurtSound.wav")
-	laser = preload("res://Prefabs/Laser.tscn")
+	laser1 = preload("res://Prefabs/Laser.tscn")
 	healthLabel = get_node("/root/Node2D/GameUI/HealthLabel")
 	scene = get_node("/root/Node2D")
 	
@@ -64,20 +64,24 @@ func _ready():
 func _on_CooldownTimerSalve_timeout():
 	$CooldownTimerSalve.stop()
 	if shootKeyPressed == true and projectiles < maxProjectiles:
-		instanciateLaser()
+		instanciateLaser(laser1, 600)
 	if projectiles < maxProjectiles:
 		$CooldownTimerSalve.wait_time = cooldownSalve
 		$CooldownTimerSalve.start()
 	
-func instanciateLaser():
+func instanciateLaser(laserObject, maxDistance):
 	projectiles += 1
-	laserInstance = laser.instance()
+	laserInstance = laserObject.instance()
+	laserInstance.maxDistance = maxDistance
 	laserInstance.position = position
 	scene.add_child(laserInstance)
 
 func input():
 	if Input.is_action_just_released("ui_accept"):
-		shootKeyPressed = false
+		#soll immer direkt die ganze Salbe geschossen werden? => pass
+		#/soll es immer möglich sein, auch weniger als die komplette Salbe zu schießen? => untere Zeile wieder aktivieren
+		#shootKeyPressed = false
+		pass
 	if Input.is_action_just_pressed("ui_up"):
 		$AudioStream2DBoost.play()
 		slowVelocity = false
@@ -97,7 +101,7 @@ func input():
 		shootKeyPressed = true
 		if projectiles < maxProjectiles:
 			if ($CooldownTimerSalve.is_stopped() == true or(projectiles == 0)) and laserCooldown == false:
-				instanciateLaser()
+				instanciateLaser(laser1, 600)
 				laserCooldown = true
 				$CooldownTimerSalve.wait_time = cooldownSalve
 				$CooldownTimerSalve.start()
