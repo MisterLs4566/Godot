@@ -9,7 +9,7 @@ var player
 var speed = 2000
 var velocity = Vector2(0, -1)
 var oldPosition = Vector2()
-var maxDistance = 10000 #400
+var maxDistance = 400
 
 """switches"""
 
