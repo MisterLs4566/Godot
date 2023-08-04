@@ -7,6 +7,7 @@ var playerCooldownTimerSalve
 
 """variables"""
 
+var strength = 1
 var speed = 2000
 var velocity = Vector2(0, -1)
 var oldPosition = Vector2()
@@ -56,7 +57,7 @@ func collision(delta):
 			collisionCollider = get_slide_collision(i).collider as CollisionObject2D
 			if collisionCollider.collision_layer == 2:
 				$CollisionShape2D.disabled = true
-				collision.emit_signal("hurt")
+				collision.emit_signal("hurt", strength)
 				velocity = Vector2.ZERO
 				#checkPlayerCooldown()
 				$AnimatedSprite.play("Explosion")

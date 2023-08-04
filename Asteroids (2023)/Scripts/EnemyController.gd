@@ -11,7 +11,7 @@ var lives = 3
 
 """signals"""
 signal explosion
-signal hurt
+signal hurt(strength)
 
 func _ready():
 	player = get_node("/root/Node2D/Player")
@@ -37,9 +37,9 @@ func _on_AnimatedSprite_animation_finished():
 		visible = false
 		$CollisionShape2D.disabled = true
 	
-func _on_Enemy_hurt():
+func _on_Enemy_hurt(strength):
 	if lives > 1:
-		lives -= 1
+		lives -= strength
 		$Stream2DHurt.play()
 		$AnimatedSprite.stop()
 		$AnimatedSprite.play("Hurt")
