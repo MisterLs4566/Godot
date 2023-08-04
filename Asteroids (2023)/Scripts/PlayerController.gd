@@ -4,6 +4,8 @@ extends KinematicBody2D
 var scene
 var laser1
 var laserInstance
+var laserMaxDistance = 500
+var laserSpeed = 2000
 var speed = 500
 var healthLabel
 
@@ -20,7 +22,7 @@ var shootKeyPressed = false
 var laserCooldown = false
 
 var lives = 6.5
-var maxProjectiles = 1 #2 #10
+var maxProjectiles = 1 #10
 var cooldownSalve = 0.1 #0.2
 
 """KinematicBody2D"""
@@ -64,12 +66,12 @@ func _ready():
 func _on_CooldownTimerSalve_timeout():
 	$CooldownTimerSalve.stop()
 	if shootKeyPressed == true and projectiles < maxProjectiles:
-		instanciateLaser(laser1, 600)
+		instanciateLaser(laser1, laserMaxDistance, laserSpeed)
 	if projectiles < maxProjectiles and maxProjectiles > 1:
 		$CooldownTimerSalve.wait_time = cooldownSalve
 		$CooldownTimerSalve.start()
 	
-func instanciateLaser(laserObject, maxDistance):
+func instanciateLaser(laserObject, maxDistance, speed):
 	if(projectiles < maxProjectiles):
 		projectiles += 1
 		laserInstance = laserObject.instance()
@@ -102,7 +104,7 @@ func input():
 		shootKeyPressed = true
 		if projectiles < maxProjectiles:
 			if ($CooldownTimerSalve.is_stopped() == true or(projectiles == 0)) and laserCooldown == false:
-				instanciateLaser(laser1, 600)
+				instanciateLaser(laser1, laserMaxDistance, laserSpeed)
 				laserCooldown = true
 				$CooldownTimerSalve.wait_time = cooldownSalve
 				$CooldownTimerSalve.start()

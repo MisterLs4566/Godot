@@ -60,8 +60,11 @@ func collision(delta):
 				velocity = Vector2.ZERO
 				#checkPlayerCooldown()
 				$AnimatedSprite.play("Explosion")
-				$cooldownTimerLaserDestroyed.wait_time = (maxDistance - position.distance_to(oldPosition)) / (speed)
-				$cooldownTimerLaserDestroyed.start()
+				if maxDistance - position.distance_to(oldPosition) > 0:
+					"""t = s/v, damit nicht unendlich viele Laser gleichzeitig abgeschossen werden können"""
+					$cooldownTimerLaserDestroyed.wait_time = (maxDistance - position.distance_to(oldPosition)) / (speed)
+					$cooldownTimerLaserDestroyed.start()
+				
 				return
 
 func _process(delta):

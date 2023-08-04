@@ -7,7 +7,7 @@ var enemyExplosionStream2D
 """variables"""
 
 var maxPlayerDistance = 1000
-var lives = 10
+var lives = 3
 
 """signals"""
 signal explosion
@@ -40,8 +40,11 @@ func _on_AnimatedSprite_animation_finished():
 func _on_Enemy_hurt():
 	if lives > 1:
 		lives -= 1
+		$Stream2DHurt.play()
+		$AnimatedSprite.stop()
 		$AnimatedSprite.play("Hurt")
 	else:
+		$CollisionShape2D.disabled = true
 		emit_signal("explosion")
 		$AnimatedSprite.play("Explosion")
 
