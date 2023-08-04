@@ -65,16 +65,17 @@ func _on_CooldownTimerSalve_timeout():
 	$CooldownTimerSalve.stop()
 	if shootKeyPressed == true and projectiles < maxProjectiles:
 		instanciateLaser(laser1, 600)
-	if projectiles < maxProjectiles:
+	if projectiles < maxProjectiles and maxProjectiles > 1:
 		$CooldownTimerSalve.wait_time = cooldownSalve
 		$CooldownTimerSalve.start()
 	
 func instanciateLaser(laserObject, maxDistance):
-	projectiles += 1
-	laserInstance = laserObject.instance()
-	laserInstance.maxDistance = maxDistance
-	laserInstance.position = position
-	scene.add_child(laserInstance)
+	if(projectiles < maxProjectiles):
+		projectiles += 1
+		laserInstance = laserObject.instance()
+		laserInstance.maxDistance = maxDistance
+		laserInstance.position = position
+		scene.add_child(laserInstance)
 
 func input():
 	if Input.is_action_just_released("ui_accept"):
@@ -135,19 +136,22 @@ func _process(delta):
 		move_and_slide(velocity * speed)
 	else:
 		move_and_slide(velocity * speed/2)
-	
-				
+		
 func _on_Player_hurt():
 	if hit == false:
 		$AudioStream2DHurt.stop()
 		$AudioStream2DHurt.play()
 		hit = true
-		lives -= 0.5
+		lives -= 1.5
+		if(lives <= 0):
+			healthLabel.rect_scale.x = 0
+			velocity = Vector2.ZERO
+			emit_signal("destroyed")
+			return
 		healthLabel.rect_scale.x = lives
 		velocity = Vector2.ZERO
 		$AnimatedSprite.play("Hurt")
-		if(lives == 0):
-			emit_signal("destroyed")
+		
 		
 func _on_AnimatedSprite_animation_finished():
 	if $AnimatedSprite.get_animation() == "Hurt":

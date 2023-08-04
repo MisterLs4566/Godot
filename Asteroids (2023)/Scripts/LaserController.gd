@@ -48,23 +48,25 @@ func _ready():
 	
 	"""connect signals"""
 	connect("explosion", self, "_on_Laser_explosion")
-func collision():
+	$cooldownTimerLaserDestroyed.connect("timeout", self, "_on_cooldownTimerLaserDestroyed_timeout")
+func collision(delta):
 	if get_slide_count() != 0:
 		for i in range(0, get_slide_count()):
 			collision = get_slide_collision(i).collider as KinematicBody2D
 			collisionCollider = get_slide_collision(i).collider as CollisionObject2D
 			if collisionCollider.collision_layer == 2:
-				collision.get_child(2).play()
-				collision.get_child(0).play("Explosion")
-				collision.get_child(1).disabled = true
+				$CollisionShape2D.disabled = true
+				collision.emit_signal("hurt")
 				velocity = Vector2.ZERO
-				checkPlayerCooldown()
+				#checkPlayerCooldown()
 				$AnimatedSprite.play("Explosion")
+				$cooldownTimerLaserDestroyed.wait_time = (maxDistance - position.distance_to(oldPosition)) / (speed)
+				$cooldownTimerLaserDestroyed.start()
 				return
 
 func _process(delta):
 	move_and_slide(velocity.rotated(rotation).normalized() * speed)
-	collision()
+	collision(delta)
 	if isShooting == true:
 		if (position.distance_to(oldPosition) > maxDistance):
 			isShooting = false
@@ -74,7 +76,7 @@ func _process(delta):
 
 func checkPlayerCooldown():
 	if player.projectiles > 0:
-			player.projectiles -= 1
+		player.projectiles -= 1
 	if player.projectiles == 0:
 		player.laserCooldown = false
 		playerCooldownTimerSalve.stop()
@@ -84,9 +86,11 @@ func _on_AnimatedSprite_animation_finished():
 	if $AnimatedSprite.get_animation() == "Explosion":
 		#checkPlayerCooldown() #eigentlich die Einstellung für den cooldown (cooldown erst aufgehoben, wenn Laser gelöscht)
 							   # =>checkPlayerCooldown an anderen Stellen im Code entfernen
-		queue_free()
+		visible = false
 		
 
 func _on_Laser_explosion():
 	$AudioStream2DLaserExplosion.play()
-	
+func _on_cooldownTimerLaserDestroyed_timeout():
+	checkPlayerCooldown()
+	queue_free()

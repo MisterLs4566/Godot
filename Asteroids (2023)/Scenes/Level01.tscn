@@ -1,15 +1,13 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Prefabs/Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Prefabs/Cameras/GameCamera.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Fonts/Minecraft.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://Scripts/GameController.gd" type="Script" id=4]
-[ext_resource path="res://Prefabs/PlayerCollisionShape2D.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Animated Tiles/Barrier1.tres" type="Texture" id=6]
 [ext_resource path="res://Prefabs/Enemy.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Animated Tiles/ArrowLeft.tres" type="Texture" id=8]
 [ext_resource path="res://Prefabs/GameUI.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Prefabs/PlayerSprite.tscn" type="PackedScene" id=10]
 
 [sub_resource type="ConcavePolygonShape2D" id=4]
 segments = PoolVector2Array( 0, 0, 16, 0, 16, 0, 16, 16, 16, 16, 0, 16, 0, 16, 0, 0 )
@@ -150,9 +148,3 @@ visible = false
 scale = Vector2( 1, 1 )
 
 [node name="GameUI" parent="." instance=ExtResource( 9 )]
-
-[node name="Player2" type="Area2D" parent="."]
-
-[node name="AnimatedSprite" parent="Player2" instance=ExtResource( 10 )]
-
-[node name="CollisionShape2D" parent="Player2" instance=ExtResource( 5 )]

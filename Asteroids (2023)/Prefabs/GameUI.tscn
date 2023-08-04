@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Fonts/Minecraft.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Prefabs/HealthLabel.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Prefabs/HealthLabel2Border.tscn" type="PackedScene" id=3]
 
 [sub_resource type="DynamicFont" id=5]
 size = 64
@@ -13,19 +15,6 @@ content_margin_top = 64.0
 content_margin_bottom = 0.0
 bg_color = Color( 0, 0, 0, 0 )
 
-[sub_resource type="StyleBoxFlat" id=7]
-bg_color = Color( 0.721569, 0.411765, 0.384314, 1 )
-border_width_left = 1
-border_width_top = 7
-border_width_right = 1
-border_width_bottom = 7
-border_color = Color( 1, 1, 1, 1 )
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-anti_aliasing = false
-
 [node name="CanvasLayer" type="CanvasLayer"]
 
 [node name="PlayerLabel" type="Label" parent="."]
@@ -33,10 +22,6 @@ custom_fonts/font = SubResource( 5 )
 custom_styles/normal = SubResource( 6 )
 text = "PLAYER"
 
-[node name="HealthLabel" type="Panel" parent="."]
-margin_left = 64.0
-margin_top = 128.0
-margin_right = 104.0
-margin_bottom = 168.0
-rect_scale = Vector2( 6.5, 1 )
-custom_styles/panel = SubResource( 7 )
+[node name="HealthLabel" parent="." instance=ExtResource( 2 )]
+
+[node name="HealthLabel2Border" parent="." instance=ExtResource( 3 )]
