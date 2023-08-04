@@ -4,15 +4,21 @@ extends KinematicBody2D
 var scene
 var laser1
 var laserInstance
-var laserMaxDistance = 500
-var laserSpeed = 2000
-var speed = 500
-var healthLabel
+
 
 """variables"""
 var velocity = Vector2.ZERO
 var level
 var projectiles = 0
+var maxProjectiles = 1  #2 #10
+var cooldownSalve = 0.1 #0.2
+
+#Laser:
+
+var laserMaxDistance = 700 #500
+var laserSpeed = 2000
+var speed = 500
+var healthLabel
 
 """switches"""
 var slowVelocity = false
@@ -21,9 +27,10 @@ var hit = false
 var shootKeyPressed = false
 var laserCooldown = false
 
+var shootPossible = true #sollte eigentlich erst aktiviert werden, wenn der Spieler trigger berührt hat
+
 var lives = 6.5
-var maxProjectiles = 1 #10
-var cooldownSalve = 0.1 #0.2
+
 
 """KinematicBody2D"""
 var collision
@@ -72,7 +79,7 @@ func _on_CooldownTimerSalve_timeout():
 		$CooldownTimerSalve.start()
 	
 func instanciateLaser(laserObject, maxDistance, speed):
-	if(projectiles < maxProjectiles):
+	if(projectiles < maxProjectiles and shootPossible == true):
 		projectiles += 1
 		laserInstance = laserObject.instance()
 		laserInstance.maxDistance = maxDistance
