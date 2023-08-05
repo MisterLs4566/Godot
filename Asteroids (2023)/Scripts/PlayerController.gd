@@ -49,7 +49,7 @@ var playerHurtSound
 
 """signals"""
 signal shoot # -> laser
-signal hurt # -> self
+signal hurt(strength, knockbackTime, knockbackSpeed) # -> self
 signal destroyed # -> self
 
 func _ready():
@@ -127,9 +127,9 @@ func collision():
 			coll = get_slide_collision(i).collider
 			if typeof(collisionCollider) != 0:
 				if collisionCollider.collision_layer == 2:
-					emit_signal("hurt")
+					emit_signal("hurt", 3.5, 0, 0)
 			elif(coll.is_in_group("collisionTiles")):
-				emit_signal("hurt")
+				emit_signal("hurt", 2.5, 0, 0)
 			else:
 				return
 
@@ -146,12 +146,19 @@ func _process(delta):
 	else:
 		move_and_slide(velocity * speed/2)
 		
-func _on_Player_hurt():
+func getKnockback(time, speed):
+	"""Knockback Timer einbauen, Knockback umsetzen"""
+	pass
+
+func _on_Player_hurt(strength, knockbackTime, knockbackSpeed):
+	if knockbackTime > 0:
+		getKnockback(knockbackTime, knockbackSpeed)
+		return
 	if hit == false:
 		$AudioStream2DHurt.stop()
 		$AudioStream2DHurt.play()
 		hit = true
-		lives -= 1.5
+		lives -= strength
 		if(lives <= 0):
 			healthLabel.rect_scale.x = 0
 			velocity = Vector2.ZERO
