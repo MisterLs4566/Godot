@@ -31,3 +31,5 @@ stream = ExtResource( 7 )
 bus = "GameSounds"
 
 [node name="CooldownTimerSalve" type="Timer" parent="."]
+
+[node name="KnockbackTimer" type="Timer" parent="."]
