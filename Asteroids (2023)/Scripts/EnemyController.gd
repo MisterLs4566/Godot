@@ -4,14 +4,26 @@ extends KinematicBody2D
 var player
 var enemyExplosionStream2D
 
+"""switches"""
+
+var shootPossible = false
+
 """variables"""
 
 var maxPlayerDistance = 1000
 var lives = 3
+var fireCooldown
+var laser
+
+"""3 Sekunden Cooldown für den Laser, wenn Player in Sichtfeld des Enemy kommt"""
+var laserCooldown = 3
 
 """signals"""
 signal explosion
 signal hurt(strength)
+
+"""preloads"""
+var laserInstance
 
 func _ready():
 	player = get_node("/root/Node2D/Player")
@@ -27,6 +39,7 @@ func _process(delta):
 		rotation_degrees += 90
 	
 	"""delete if not existing"""
+	
 	if(visible == false and $Stream2DExplosion.playing == false):
 		queue_free()
 

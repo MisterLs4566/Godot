@@ -2,9 +2,8 @@ extends KinematicBody2D
 
 """nodes"""
 var scene
-var laser1
-var laserInstance
-
+var healthLabel
+var tileMap
 
 """variables"""
 var velocity = Vector2.ZERO
@@ -12,13 +11,13 @@ var level
 var projectiles = 0
 var maxProjectiles = 1  #2 #10
 var cooldownSalve = 0.1 #0.2
+var collisionTile
 
 #Laser:
 
 var laserMaxDistance = 700 #500
 var laserSpeed = 2000
 var speed = 500
-var healthLabel
 
 """switches"""
 var slowVelocity = false
@@ -46,6 +45,8 @@ var boostSound
 var menuScene
 var playerExplosionSound
 var playerHurtSound
+var laser1
+var laserInstance
 
 """signals"""
 signal shoot # -> laser
@@ -62,6 +63,7 @@ func _ready():
 	laser1 = preload("res://Prefabs/Laser.tscn")
 	healthLabel = get_node("/root/Node2D/GameUI/HealthLabel")
 	scene = get_node("/root/Node2D")
+	tileMap = get_node("/root/Node2D/TileMap")
 	
 	"""connect signals"""
 	
@@ -93,6 +95,7 @@ func input():
 		#shootKeyPressed = false
 		pass
 	if Input.is_action_just_pressed("ui_up"):
+		#if($AudioStream2DBoost.playing == false):
 		$AudioStream2DBoost.play()
 		slowVelocity = false
 		start = true
@@ -132,6 +135,8 @@ func collision():
 				emit_signal("hurt", 2.5, 0, 0)
 			else:
 				return
+func tileCollision():
+	pass
 
 func _process(delta):
 	#print(projectiles)
@@ -139,6 +144,7 @@ func _process(delta):
 	look_at(get_global_mouse_position())
 	rotation_degrees += 90
 	collision()	
+	tileCollision()
 	if start == false:
 		return
 	if slowVelocity == false:
@@ -172,7 +178,10 @@ func _on_Player_hurt(strength, knockbackTime, knockbackSpeed):
 func _on_AnimatedSprite_animation_finished():
 	if $AnimatedSprite.get_animation() == "Hurt":
 		hit = false
-		$AnimatedSprite.play("Idle")
+		if slowVelocity == true:
+			$AnimatedSprite.play("Idle")
+		else:
+			$AnimatedSprite.play("Movement")
 	elif $AnimatedSprite.get_animation() == "Explosion":
 		get_tree().reload_current_scene()
 
