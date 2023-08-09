@@ -17,8 +17,8 @@ physics_material_override = SubResource( 57 )
 gravity_scale = 0.0
 contacts_reported = 1
 contact_monitor = true
-linear_damp = 1.75
-angular_damp = 0.0
+linear_damp = 3.0
+angular_damp = 3.0
 script = ExtResource( 4 )
 
 [node name="AnimatedSprite" parent="." instance=ExtResource( 1 )]

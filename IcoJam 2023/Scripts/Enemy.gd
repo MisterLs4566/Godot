@@ -25,7 +25,7 @@ func _ready():
 	elif is_in_group("Trophy"):
 		type = "Trophy"
 	elif is_in_group("Trap"):
-		type = "trap"
+		type = "Trap"
 	game = get_node("/root/Node2D")
 	game.connect("gameStart", self, "_on_Node2D_gameStart")
 	game.connect("resume", self, "_on_Node2D_resume")
@@ -35,14 +35,12 @@ func _ready():
 	connect("damage", healthLabel, "_on_Player_damage")
 
 func checkY():
-	if position.y >= 1110 and (type!="trap"):
+	if position.y >= 1110 and (type!="Trap"):
 		emit_signal("damage")
 		queue_free()
 		if(type == "Trophy"):
 			get_tree().reload_current_scene()
 func collision():
-	if type == "Trap":
-		return
 	if $AnimatedSprite.get_animation() != str(type, "Destroy"):
 		coll = get_overlapping_bodies()
 		for c in coll:
@@ -55,7 +53,8 @@ func collision():
 
 func _process(delta):
 	position.y += grav * state * delta
-	collision()
+	if type != "Trap":
+		collision()
 	checkY()
 func _on_Node2D_resume():
 	state = 1

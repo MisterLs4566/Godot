@@ -65,19 +65,23 @@ func input():
 	"""Movement"""
 	
 	if(Input.is_action_pressed("ui_right")):
-		if(velocity == Vector2.LEFT):
-			sleeping = true
+		#if(velocity == Vector2.LEFT):
+		#	sleeping = true
 		velocity = Vector2.RIGHT
-		apply_impulse(Vector2.ZERO, velocity * speed)
 	elif(Input.is_action_pressed("ui_left")):
-		if(velocity == Vector2.RIGHT):
-			sleeping = true
+		#if(velocity == Vector2.RIGHT):
+		#	sleeping = true
 		velocity = Vector2.LEFT
-		apply_impulse(Vector2.ZERO, velocity * speed)
-
+		
+	if(Input.is_action_just_released("ui_right")):
+		if velocity == Vector2.RIGHT:
+			velocity = Vector2.ZERO
+	if(Input.is_action_just_released("ui_left")):
+		if velocity == Vector2.LEFT:
+			velocity = Vector2.ZERO
 func _process(delta):
 	input()
-		
+	apply_impulse(Vector2.ZERO, velocity * speed)
 func _on_Sprite_collectCircle(object):
 	if self.type == object.type:
 		object.grav = 0
