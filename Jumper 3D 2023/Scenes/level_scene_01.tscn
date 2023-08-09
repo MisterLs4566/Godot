@@ -1,41 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://ba3nbfc1lmk7j"]
+[gd_scene load_steps=5 format=3 uid="uid://ba3nbfc1lmk7j"]
 
-[sub_resource type="Environment" id="Environment_4hwue"]
-ambient_light_color = Color(1, 1, 1, 1)
-ambient_light_energy = 13.63
-
-[sub_resource type="SphereMesh" id="SphereMesh_du1nc"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_3o5cm"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ujjwc"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_v481i"]
+[ext_resource type="Script" path="res://Scripts/GameController.gd" id="1_c162j"]
+[ext_resource type="PackedScene" uid="uid://bv7byxnj6jao7" path="res://Prefabs/Sun.tscn" id="1_k2d0j"]
+[ext_resource type="PackedScene" uid="uid://1qyw8irs782e" path="res://Prefabs/Player.tscn" id="2_m6v5t"]
+[ext_resource type="PackedScene" uid="uid://cp6jqpqi12thn" path="res://Prefabs/Ground.tscn" id="3_1knhl"]
 
 [node name="LevelScene01" type="Node3D"]
+script = ExtResource("1_c162j")
 
-[node name="Player" type="CharacterBody3D" parent="."]
+[node name="Sun" parent="." instance=ExtResource("1_k2d0j")]
 
-[node name="Camera3D" type="Camera3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 0.811758, 0.583995, 0, -0.583995, 0.811758, -0.500738, 1.58509, 1.84946)
-environment = SubResource("Environment_4hwue")
-current = true
-fov = 70.5
-near = 1.356
+[node name="Player" parent="." instance=ExtResource("2_m6v5t")]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
-mesh = SubResource("SphereMesh_du1nc")
+[node name="Ground" parent="." instance=ExtResource("3_1knhl")]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
-shape = SubResource("SphereShape3D_3o5cm")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.08966, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(6.78449, 0, 0, 0, 0.456264, 0, 0, 0, 7.92922, 0, 0, 0)
-shape = SubResource("BoxShape3D_ujjwc")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-transform = Transform3D(6.78449, 0, 0, 0, 0.456264, 0, 0, 0, 7.92922, 0, 0, 0)
-mesh = SubResource("BoxMesh_v481i")
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.63945, 2.53394)
