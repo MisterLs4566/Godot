@@ -1,11 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://1qyw8irs782e"]
+[gd_scene load_steps=7 format=3 uid="uid://1qyw8irs782e"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_nigje"]
+[ext_resource type="Script" path="res://Prefabs/CameraController.gd" id="2_lo265"]
 
 [sub_resource type="Environment" id="Environment_4hwue"]
 ambient_light_color = Color(1, 1, 1, 1)
 
-[sub_resource type="SphereMesh" id="SphereMesh_du1nc"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bfvqo"]
+disable_receive_shadows = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_77b22"]
+material = SubResource("StandardMaterial3D_bfvqo")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_3o5cm"]
 
@@ -13,14 +18,17 @@ ambient_light_color = Color(1, 1, 1, 1)
 script = ExtResource("1_nigje")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.811758, 0.583995, 0, -0.583995, 0.811758, 0, 1.585, 1.849)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 environment = SubResource("Environment_4hwue")
+doppler_tracking = 2
 current = true
 fov = 85.0
 near = 0.001
+script = ExtResource("2_lo265")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("SphereMesh_du1nc")
+layers = 0
+mesh = SubResource("CapsuleMesh_77b22")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_3o5cm")

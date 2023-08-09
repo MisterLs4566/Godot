@@ -3,7 +3,8 @@ extends Node3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	#RenderingServer.set_default_clear_color(Color("2fccff"))
 
 func input():
 	if Input.is_action_just_pressed("ui_cancel"):
