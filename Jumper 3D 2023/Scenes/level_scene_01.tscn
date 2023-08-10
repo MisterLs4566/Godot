@@ -11,16 +11,20 @@
 script = ExtResource("1_c162j")
 
 [node name="Sun" parent="." instance=ExtResource("1_k2d0j")]
+light_energy = 16.0
+light_indirect_energy = 0.0
+light_volumetric_fog_energy = 0.0
+shadow_blur = 0.0
 
 [node name="Player" parent="." instance=ExtResource("2_m6v5t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.99017, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.70753, 0)
 
 [node name="Ground" parent="." instance=ExtResource("3_1knhl")]
 
 [node name="Label" type="Label" parent="."]
 offset_right = 1920.0
 offset_bottom = 1080.0
-theme_override_colors/font_color = Color(0.211765, 0.196078, 0.796078, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = SubResource("SystemFont_er8em")
 theme_override_font_sizes/font_size = 100
 text = "+"
