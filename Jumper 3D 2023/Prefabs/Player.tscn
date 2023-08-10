@@ -18,20 +18,18 @@ material = SubResource("StandardMaterial3D_bfvqo")
 script = ExtResource("1_nigje")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.95, 0)
 environment = SubResource("Environment_4hwue")
 doppler_tracking = 2
 current = true
-fov = 85.0
-near = 0.001
+fov = 90.0
+near = 0.005
 script = ExtResource("2_lo265")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-layers = 0
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+cast_shadow = 0
 mesh = SubResource("CapsuleMesh_77b22")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_3o5cm")
-
-[node name="focus" type="StaticBody3D" parent="."]
-transform = Transform3D(0.996404, 0.0435067, 0.0727038, -0.0310646, 0.985929, -0.16425, -0.0788267, 0.161401, 0.983736, 0, 0, -1.51278)

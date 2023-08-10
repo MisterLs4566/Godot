@@ -71,19 +71,19 @@ var_name = "HELLOWORLD"
 data = {
 "base_type": "Label",
 "functions": [ {
-"data_connections": [ 3, 0, 2, 0 ],
-"function_id": 1,
-"name": "new_function",
-"nodes": [ 1, Vector2( 0, -60 ), SubResource( 5 ), 2, Vector2( 0, 20 ), SubResource( 6 ), 3, Vector2( -40, 140 ), SubResource( 7 ) ],
-"scroll": Vector2( -50, -100 ),
-"sequence_connections": [ 1, 0, 2 ]
-}, {
 "data_connections": [  ],
 "function_id": -1,
 "name": "f_312843592",
 "nodes": [  ],
 "scroll": Vector2( -256.882, -251.978 ),
 "sequence_connections": [  ]
+}, {
+"data_connections": [ 3, 0, 2, 0 ],
+"function_id": 1,
+"name": "new_function",
+"nodes": [ 1, Vector2( 0, -60 ), SubResource( 5 ), 2, Vector2( 0, 20 ), SubResource( 6 ), 3, Vector2( -40, 140 ), SubResource( 7 ) ],
+"scroll": Vector2( -50, -100 ),
+"sequence_connections": [ 1, 0, 2 ]
 } ],
 "is_tool_script": false,
 "signals": [  ],

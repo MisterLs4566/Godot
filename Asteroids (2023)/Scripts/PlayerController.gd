@@ -18,6 +18,7 @@ var collisionTile
 var laserMaxDistance = 700 #500
 var laserSpeed = 2000
 var speed = 500
+var laserStrength = 1
 
 """switches"""
 var slowVelocity = false
@@ -75,17 +76,19 @@ func _ready():
 func _on_CooldownTimerSalve_timeout():
 	$CooldownTimerSalve.stop()
 	if shootKeyPressed == true and projectiles < maxProjectiles:
-		instanciateLaser(laser1, laserMaxDistance, laserSpeed)
+		instanciateLaser(laser1, laserMaxDistance, laserSpeed, laserStrength)
 	if projectiles < maxProjectiles and maxProjectiles > 1:
 		$CooldownTimerSalve.wait_time = cooldownSalve
 		$CooldownTimerSalve.start()
 	
-func instanciateLaser(laserObject, maxDistance, speed):
+func instanciateLaser(laserObject, maxDistance, speed, strength):
 	if(projectiles < maxProjectiles and shootPossible == true):
 		projectiles += 1
 		laserInstance = laserObject.instance()
 		laserInstance.maxDistance = maxDistance
 		laserInstance.position = position
+		laserInstance.speed = speed
+		laserInstance.strength = strength
 		scene.add_child(laserInstance)
 
 func input():
@@ -114,7 +117,7 @@ func input():
 		shootKeyPressed = true
 		if projectiles < maxProjectiles:
 			if ($CooldownTimerSalve.is_stopped() == true or(projectiles == 0)) and laserCooldown == false:
-				instanciateLaser(laser1, laserMaxDistance, laserSpeed)
+				instanciateLaser(laser1, laserMaxDistance, laserSpeed, laserStrength)
 				laserCooldown = true
 				$CooldownTimerSalve.wait_time = cooldownSalve
 				$CooldownTimerSalve.start()
@@ -130,7 +133,7 @@ func collision():
 			coll = get_slide_collision(i).collider
 			if typeof(collisionCollider) != 0:
 				if collisionCollider.collision_layer == 2:
-					emit_signal("hurt", 3.5, 0, 0)
+					emit_signal("hurt", collisionCollider.touchStrength, 0, 0)
 			elif(coll.is_in_group("collisionTiles")):
 				emit_signal("hurt", 2.5, 0, 0)
 			else:

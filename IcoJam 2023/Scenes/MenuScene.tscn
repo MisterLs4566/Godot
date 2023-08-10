@@ -29,7 +29,7 @@ anti_aliasing = false
 
 [sub_resource type="DynamicFont" id=1]
 size = 128
-outline_size = 8
+outline_size = 12
 outline_color = Color( 1, 0, 0, 1 )
 font_data = ExtResource( 1 )
 

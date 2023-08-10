@@ -17,6 +17,7 @@ var laser
 
 """3 Sekunden Cooldown für den Laser, wenn Player in Sichtfeld des Enemy kommt"""
 var laserCooldown = 3
+var touchStrength = 3.5
 
 """signals"""
 signal explosion

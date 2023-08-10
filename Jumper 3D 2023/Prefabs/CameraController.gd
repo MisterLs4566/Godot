@@ -11,4 +11,4 @@ func _input(event):
 		rotate_object_local(Vector3.RIGHT, event.relative.y * mouseSensitivity)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	rotation.x = clamp(rotation.x, -1, 1)
+	rotation.x = clamp(rotation.x, -1, 0.6)
