@@ -1,9 +1,18 @@
-[gd_scene load_steps=7 format=3 uid="uid://1qyw8irs782e"]
+[gd_scene load_steps=10 format=3 uid="uid://dul5fqtp3e0r"]
 
-[ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_nigje"]
-[ext_resource type="Script" path="res://Prefabs/CameraController.gd" id="2_lo265"]
+[ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_p2k3k"]
+[ext_resource type="Shader" path="res://Shaders/CameraSkyShaders.gdshader" id="2_vy6nk"]
+[ext_resource type="Script" path="res://Scripts/CameraController.gd" id="3_c730q"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8f1qy"]
+shader = ExtResource("2_vy6nk")
+
+[sub_resource type="Sky" id="Sky_i37nl"]
+sky_material = SubResource("ShaderMaterial_8f1qy")
 
 [sub_resource type="Environment" id="Environment_4hwue"]
+sky = SubResource("Sky_i37nl")
+ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bfvqo"]
@@ -15,7 +24,7 @@ material = SubResource("StandardMaterial3D_bfvqo")
 [sub_resource type="SphereShape3D" id="SphereShape3D_3o5cm"]
 
 [node name="Player" type="CharacterBody3D"]
-script = ExtResource("1_nigje")
+script = ExtResource("1_p2k3k")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.95, 0)
@@ -24,7 +33,7 @@ doppler_tracking = 2
 current = true
 fov = 90.0
 near = 0.005
-script = ExtResource("2_lo265")
+script = ExtResource("3_c730q")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)

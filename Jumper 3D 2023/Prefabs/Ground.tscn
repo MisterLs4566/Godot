@@ -1,21 +1,31 @@
-[gd_scene load_steps=4 format=3 uid="uid://cp6jqpqi12thn"]
+[gd_scene load_steps=6 format=3 uid="uid://cp6jqpqi12thn"]
+
+[ext_resource type="Texture2D" uid="uid://cgubjh0avt5w" path="res://Assets/Brick.png" id="1_08u0p"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g04qd"]
-size = Vector3(1, 0.133292, 2.8496)
+size = Vector3(2.67421, 0.133292, 2.8496)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5b18f"]
+albedo_texture = ExtResource("1_08u0p")
+metallic_specular = 0.0
+uv1_scale = Vector3(100, 100, 100)
 
 [sub_resource type="BoxMesh" id="BoxMesh_v481i"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fjxlc"]
+metallic = 1.0
+normal_enabled = true
 
 [node name="StaticBody3D" type="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.08966, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(22.9293, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
 shape = SubResource("BoxShape3D_g04qd")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_5b18f")
 transparency = 0.5
 mesh = SubResource("BoxMesh_v481i")
 surface_material_override/0 = SubResource("StandardMaterial3D_fjxlc")
