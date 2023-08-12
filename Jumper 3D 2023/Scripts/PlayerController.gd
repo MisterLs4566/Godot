@@ -1,15 +1,17 @@
 extends CharacterBody3D
 
 
-var SPEED = 5.0
-var walkSpeed = 5.0
-var runSpeed = 10.0
-const JUMP_VELOCITY = 4.5
+var SPEED = 15
+var walkSpeed = 15
+var runSpeed = 5
+var JUMP_VELOCITY = 6
 var rotationObject = Vector2()
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-
+func checkRespawn():
+	if position.y < -10:
+		get_tree().reload_current_scene()
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -36,6 +38,7 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
-
+	checkRespawn()
+	
 func _process(delta):
 	pass

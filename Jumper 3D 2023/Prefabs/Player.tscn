@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dul5fqtp3e0r"]
+[gd_scene load_steps=10 format=3 uid="uid://bj3xmlsus6du0"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_p2k3k"]
 [ext_resource type="Shader" path="res://Shaders/CameraSkyShaders.gdshader" id="2_vy6nk"]
@@ -21,13 +21,14 @@ disable_receive_shadows = true
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_77b22"]
 material = SubResource("StandardMaterial3D_bfvqo")
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_3o5cm"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jacnr"]
 
 [node name="Player" type="CharacterBody3D"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 script = ExtResource("1_p2k3k")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.95, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 environment = SubResource("Environment_4hwue")
 doppler_tracking = 2
 current = true
@@ -36,9 +37,8 @@ near = 0.005
 script = ExtResource("3_c730q")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_77b22")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("SphereShape3D_3o5cm")
+shape = SubResource("CapsuleShape3D_jacnr")

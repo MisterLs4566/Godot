@@ -1,25 +1,43 @@
-[gd_scene load_steps=6 format=3 uid="uid://ba3nbfc1lmk7j"]
+[gd_scene load_steps=15 format=3 uid="uid://ba3nbfc1lmk7j"]
 
 [ext_resource type="Script" path="res://Scripts/GameController.gd" id="1_c162j"]
 [ext_resource type="PackedScene" uid="uid://bv7byxnj6jao7" path="res://Prefabs/Sun.tscn" id="1_k2d0j"]
-[ext_resource type="PackedScene" uid="uid://dul5fqtp3e0r" path="res://Prefabs/Player.tscn" id="2_m6v5t"]
 [ext_resource type="PackedScene" uid="uid://cp6jqpqi12thn" path="res://Prefabs/Ground.tscn" id="3_1knhl"]
+[ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="5_2ag2i"]
+[ext_resource type="PackedScene" uid="uid://d34bq2r13k6h2" path="res://Prefabs/Brick.tscn" id="5_gbjro"]
+[ext_resource type="Shader" path="res://Shaders/CameraSkyShaders.gdshader" id="6_iwg2n"]
+[ext_resource type="Script" path="res://Scripts/CameraController.gd" id="7_8avn4"]
 
 [sub_resource type="SystemFont" id="SystemFont_er8em"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8f1qy"]
+shader = ExtResource("6_iwg2n")
+
+[sub_resource type="Sky" id="Sky_i37nl"]
+sky_material = SubResource("ShaderMaterial_8f1qy")
+
+[sub_resource type="Environment" id="Environment_4hwue"]
+sky = SubResource("Sky_i37nl")
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bfvqo"]
+disable_receive_shadows = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_77b22"]
+material = SubResource("StandardMaterial3D_bfvqo")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jacnr"]
+height = 2.00652
 
 [node name="LevelScene01" type="Node3D"]
 script = ExtResource("1_c162j")
 
 [node name="Sun" parent="." instance=ExtResource("1_k2d0j")]
-light_energy = 16.0
+light_energy = 20.0
 light_indirect_energy = 0.0
 light_volumetric_fog_energy = 0.0
 shadow_blur = 0.0
-
-[node name="Player" parent="." instance=ExtResource("2_m6v5t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.70753, 0)
-
-[node name="Ground" parent="." instance=ExtResource("3_1knhl")]
 
 [node name="Label" type="Label" parent="."]
 offset_right = 1920.0
@@ -30,3 +48,150 @@ theme_override_font_sizes/font_size = 100
 text = "+"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Ground" parent="." instance=ExtResource("3_1knhl")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -1, 0)
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.71538, 0)
+script = ExtResource("5_2ag2i")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.799999, 0)
+environment = SubResource("Environment_4hwue")
+doppler_tracking = 2
+current = true
+fov = 70.0
+near = 0.005
+script = ExtResource("7_8avn4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+cast_shadow = 0
+mesh = SubResource("CapsuleMesh_77b22")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_jacnr")
+
+[node name="Wall" type="Node3D" parent="."]
+
+[node name="Brick" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1, 19)
+
+[node name="Brick2" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 2, 1, 19)
+
+[node name="Brick3" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -2, 1, 19)
+
+[node name="Brick4" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -2, 3, 19)
+
+[node name="Brick5" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 3, 19)
+
+[node name="Brick6" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 2, 3, 19)
+
+[node name="Brick7" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 6, 1, 19)
+
+[node name="Brick8" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 8, 1, 19)
+
+[node name="Brick9" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 4, 1, 19)
+
+[node name="Brick10" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 4, 3, 19)
+
+[node name="Brick11" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 6, 3, 19)
+
+[node name="Brick12" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 8, 3, 19)
+
+[node name="Brick13" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -6, 1, 19)
+
+[node name="Brick14" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -4, 1, 19)
+
+[node name="Brick15" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -8, 1, 19)
+
+[node name="Brick16" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -8, 3, 19)
+
+[node name="Brick17" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -6, 3, 19)
+
+[node name="Brick18" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -4, 3, 19)
+
+[node name="Brick19" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 12, 1, 19)
+
+[node name="Brick20" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 14, 1, 19)
+
+[node name="Brick21" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 10, 1, 19)
+
+[node name="Brick22" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 10, 3, 19)
+
+[node name="Brick23" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 12, 3, 19)
+
+[node name="Brick24" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 14, 3, 19)
+
+[node name="Brick25" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 17, 1, 19)
+
+[node name="Brick26" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 19, 1, 19)
+
+[node name="Brick27" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 15, 1, 19)
+
+[node name="Brick28" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 15, 3, 19)
+
+[node name="Brick29" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 17, 3, 19)
+
+[node name="Brick31" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -12, 1, 19)
+
+[node name="Brick32" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -10, 1, 19)
+
+[node name="Brick33" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -14, 1, 19)
+
+[node name="Brick34" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -14, 3, 19)
+
+[node name="Brick35" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -12, 3, 19)
+
+[node name="Brick36" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -10, 3, 19)
+
+[node name="Brick37" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -18, 1, 19)
+
+[node name="Brick38" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -16, 1, 19)
+
+[node name="Brick42" parent="Wall" instance=ExtResource("5_gbjro")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -16, 3, 19)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.458758, 16)
+light_color = Color(0, 0.733333, 0.623529, 1)
+light_energy = 100.0
+shadow_enabled = true
+shadow_bias = 2.111
+omni_range = 6.0
