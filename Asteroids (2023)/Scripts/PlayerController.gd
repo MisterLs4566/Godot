@@ -88,7 +88,8 @@ func instanciateLaser(laserObject, maxDistance, speed, strength):
 		laserInstance.maxDistance = maxDistance
 		laserInstance.position = position
 		laserInstance.speed = speed
-		laserInstance.strength = strength
+		laserInstance.strength = laserStrength
+		laserInstance.target = "Enemy"
 		scene.add_child(laserInstance)
 
 func input():
@@ -123,8 +124,9 @@ func input():
 				$CooldownTimerSalve.start()
 				
 	if Input.is_action_just_pressed("ui_end"):
-		get_tree().change_scene_to(menuScene)
-
+		#get_tree().change_scene_to(menuScene)
+		pass
+		
 func collision():
 	if get_slide_count() != 0:
 		for i in range(0, get_slide_count()):
@@ -132,7 +134,7 @@ func collision():
 			collisionCollider = get_slide_collision(i).collider as CollisionObject2D
 			coll = get_slide_collision(i).collider
 			if typeof(collisionCollider) != 0:
-				if collisionCollider.collision_layer == 2:
+				if collision.is_in_group("Enemy"):
 					emit_signal("hurt", collisionCollider.touchStrength, 0, 0)
 			elif(coll.is_in_group("collisionTiles")):
 				emit_signal("hurt", 2.5, 0, 0)

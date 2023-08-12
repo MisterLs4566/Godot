@@ -18,22 +18,28 @@ var laser
 """3 Sekunden Cooldown für den Laser, wenn Player in Sichtfeld des Enemy kommt"""
 var laserCooldown = 3
 var touchStrength = 3.5
+var laserStrength = 1
 
 """signals"""
 signal explosion
-signal hurt(strength)
+signal hurt(strength, knockbackTime, knockbackSpeed)
 
 """preloads"""
 var laserInstance
 
 func _ready():
 	player = get_node("/root/Node2D/Player")
+	$EnemyHealthLabel.set_as_toplevel(true)
 	
 	"""connect signals"""
 	
 	connect("explosion", self, "_on_Enemy_explosion")
 	connect("hurt", self, "_on_Enemy_hurt")
 func _process(delta):
+	"""update health label"""
+	$EnemyHealthLabel.rect_position.x = position.x - 40
+	$EnemyHealthLabel.rect_position.y = position.y - 160
+	$EnemyHealthLabel.text = str(lives)
 	"""rotate toward player"""
 	if position.distance_to(player.position) < maxPlayerDistance:
 		look_at(player.position)
@@ -51,7 +57,7 @@ func _on_AnimatedSprite_animation_finished():
 		visible = false
 		$CollisionShape2D.disabled = true
 	
-func _on_Enemy_hurt(strength):
+func _on_Enemy_hurt(strength, knockbackTime, knockbackSpeed):
 	if lives > 1:
 		lives -= strength
 		$Stream2DHurt.play()

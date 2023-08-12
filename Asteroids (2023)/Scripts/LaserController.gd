@@ -12,7 +12,7 @@ var speed = 2000
 var velocity = Vector2(0, -1)
 var oldPosition = Vector2()
 var maxDistance = 400
-
+var target = ""
 """switches"""
 
 var isShooting = true
@@ -55,9 +55,9 @@ func collision(delta):
 		for i in range(0, get_slide_count()):
 			collision = get_slide_collision(i).collider as KinematicBody2D
 			collisionCollider = get_slide_collision(i).collider as CollisionObject2D
-			if collisionCollider.collision_layer == 2:
+			if collision.is_in_group(target):
 				$CollisionShape2D.disabled = true
-				collision.emit_signal("hurt", strength)
+				collision.emit_signal("hurt", strength, 0, 0)
 				velocity = Vector2.ZERO
 				#checkPlayerCooldown()
 				$AnimatedSprite.play("Explosion")
@@ -65,8 +65,6 @@ func collision(delta):
 					"""t = s/v, damit nicht unendlich viele Laser gleichzeitig abgeschossen werden können"""
 					$cooldownTimerLaserDestroyed.wait_time = (maxDistance - position.distance_to(oldPosition)) / (speed)
 					$cooldownTimerLaserDestroyed.start()
-				
-				return
 
 func _process(delta):
 	move_and_slide(velocity.rotated(rotation).normalized() * speed)
