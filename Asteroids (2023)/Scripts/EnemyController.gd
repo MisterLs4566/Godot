@@ -58,12 +58,12 @@ func _on_AnimatedSprite_animation_finished():
 		$CollisionShape2D.disabled = true
 	
 func _on_Enemy_hurt(strength, knockbackTime, knockbackSpeed):
-	if lives > 1:
+	if lives >= 1:
 		lives -= strength
 		$Stream2DHurt.play()
 		$AnimatedSprite.stop()
 		$AnimatedSprite.play("Hurt")
-	else:
+	if lives == 0:
 		$CollisionShape2D.disabled = true
 		emit_signal("explosion")
 		$AnimatedSprite.play("Explosion")

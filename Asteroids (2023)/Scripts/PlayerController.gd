@@ -9,13 +9,13 @@ var tileMap
 var velocity = Vector2.ZERO
 var level
 var projectiles = 0
-var maxProjectiles = 1  #2 #10
-var cooldownSalve = 0.1 #0.2
+var maxProjectiles = 1  #2 #10 #20 #100
+var cooldownSalve = 0.1 #0.2 #0.01
 var collisionTile
 
 #Laser:
 
-var laserMaxDistance = 700 #500
+var laserMaxDistance = 700 #500 #1500
 var laserSpeed = 2000
 var speed = 500
 var laserStrength = 1
@@ -96,8 +96,10 @@ func input():
 	if Input.is_action_just_released("ui_accept"):
 		#soll immer direkt die ganze Salbe geschossen werden? => pass
 		#/soll es immer möglich sein, auch weniger als die komplette Salbe zu schießen? => untere Zeile wieder aktivieren
-		#shootKeyPressed = false
-		pass
+		if maxProjectiles > 4:
+			shootKeyPressed = false
+		else:
+			pass
 	if Input.is_action_just_pressed("ui_up"):
 		#if($AudioStream2DBoost.playing == false):
 		$AudioStream2DBoost.play()
@@ -124,8 +126,8 @@ func input():
 				$CooldownTimerSalve.start()
 				
 	if Input.is_action_just_pressed("ui_end"):
-		#get_tree().change_scene_to(menuScene)
-		pass
+		get_tree().change_scene_to(menuScene)
+		#pass
 		
 func collision():
 	if get_slide_count() != 0:

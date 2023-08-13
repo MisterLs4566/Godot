@@ -13,5 +13,5 @@ func _on_Button_pressed():
 	get_tree().change_scene_to(load("res://Scenes/Level01.tscn"))
 
 func _process(delta):
-	if Input.is_action_just_released("ui_accept"):
+	if Input.is_action_just_released("ui_focus_next"):
 		_on_Button_pressed()
