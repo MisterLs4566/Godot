@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://ba3nbfc1lmk7j"]
+[gd_scene load_steps=16 format=3 uid="uid://ba3nbfc1lmk7j"]
 
 [ext_resource type="Script" path="res://Scripts/GameController.gd" id="1_c162j"]
 [ext_resource type="PackedScene" uid="uid://bv7byxnj6jao7" path="res://Prefabs/Sun.tscn" id="1_k2d0j"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://d34bq2r13k6h2" path="res://Prefabs/Brick.tscn" id="5_gbjro"]
 [ext_resource type="Shader" path="res://Shaders/CameraSkyShaders.gdshader" id="6_iwg2n"]
 [ext_resource type="Script" path="res://Scripts/CameraController.gd" id="7_8avn4"]
+[ext_resource type="PackedScene" uid="uid://dsmktp4lwo5ks" path="res://3D Models/Jumper 3D-2023-Robot.dae" id="8_t6e32"]
 
 [sub_resource type="SystemFont" id="SystemFont_er8em"]
 
@@ -195,3 +196,6 @@ light_specular = 7.58
 shadow_enabled = true
 shadow_bias = 2.111
 omni_range = 6.0
+
+[node name="Jumper 3D-2023-Robot" parent="." instance=ExtResource("8_t6e32")]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 12, 0, 14)
