@@ -61,8 +61,8 @@ func _on_AnimatedSprite_animation_finished():
 func _on_Enemy_hurt(strength, knockbackTime, knockbackSpeed):
 	if $CooldownHurtTimer.is_stopped() == false:
 		return
-	
 	$CooldownHurtTimer.start()
+
 	if lives >= 1:
 		lives -= strength
 		$Stream2DHurt.play()

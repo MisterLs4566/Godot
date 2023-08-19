@@ -18,6 +18,7 @@ var collisionTile
 var laserMaxDistance = 700 #500 #1500
 var laserSpeed = 2000
 var speed = 500
+var knockbackSpeed
 var laserStrength = 1
 
 """switches"""
@@ -26,6 +27,8 @@ var start = false
 var hit = false
 var shootKeyPressed = false
 var laserCooldown = false
+var knockback = false
+var destroyed = false
 
 var shootPossible = true #sollte eigentlich erst aktiviert werden, wenn der Spieler trigger berührt hat
 
@@ -33,7 +36,7 @@ var lives = 6.5
 
 
 """KinematicBody2D"""
-var collision
+var collisionBody
 
 """CollisionObject2D"""
 var collisionCollider
@@ -71,6 +74,8 @@ func _ready():
 	connect("destroyed", self, "_on_Player_destroyed")
 	connect("hurt", self, "_on_Player_hurt")
 	$CooldownTimerSalve.connect("timeout", self, "_on_CooldownTimerSalve_timeout")
+	$KnockbackTimer.connect("timeout", self, "_on_KnockbackTimer_timeout")
+	$CooldownHurtTimer.connect("timeout", self, "_on_CooldownHurtTimer_timeout")
 	$AnimatedSprite.connect("animation_finished", self, "_on_AnimatedSprite_animation_finished")
 	
 func _on_CooldownTimerSalve_timeout():
@@ -132,66 +137,104 @@ func input():
 func collision():
 	if get_slide_count() != 0:
 		for i in range(0, get_slide_count()):
-			collision = get_slide_collision(i).collider as KinematicBody2D
-			collisionCollider = get_slide_collision(i).collider as CollisionObject2D
 			coll = get_slide_collision(i).collider
-			if typeof(collisionCollider) != 0:
-				if collision.is_in_group("Enemy"):
-					emit_signal("hurt", collisionCollider.touchStrength, 0, 0)
-			elif(coll.is_in_group("collisionTiles")):
-				emit_signal("hurt", 2.5, 0, 0)
-			else:
+			if(coll.is_in_group("collisionTiles")):
+				knockback = true
+				emit_signal("hurt", 2.5, 0.1, 1000)
 				return
+			collisionBody = get_slide_collision(i).collider as KinematicBody2D
+			collisionCollider = get_slide_collision(i).collider as CollisionObject2D
+			
+			if typeof(collisionCollider) != 0:
+				if collisionBody.is_in_group("Enemy"):
+					emit_signal("hurt", collisionCollider.touchStrength, 0.1, 1000)
+			
 				
 func tileCollision():
 	pass
 
 func _process(delta):
+	if destroyed == true:
+		return
 	#print(projectiles)
+	
+	collision()	
+	tileCollision()
+	if knockback == true:
+		if $AnimatedSprite.get_animation() != "Hurt":
+			$AnimatedSprite.stop()
+			$AnimatedSprite.play("Hurt")
+		velocity.x = 0
+		velocity.y = -1
+		velocity = velocity.rotated(rotation).normalized()
+		move_and_slide(velocity * knockbackSpeed * -1)
+		return
+	
+
+		
 	input()
 	look_at(get_global_mouse_position())
 	rotation_degrees += 90
-	collision()	
-	tileCollision()
 	if start == false:
 		return
+		
 	if slowVelocity == false:
 		move_and_slide(velocity * speed)
 	else:
 		move_and_slide(velocity * speed/2)
-
-func getKnockback(time, speed):
+func getKnockback(time, kSpeed):
 	"""Knockback Timer einbauen, Knockback umsetzen"""
-	pass
+	start = false
+	knockback = true
+	$KnockbackTimer.wait_time = time
+	$KnockbackTimer.start()
+	knockbackSpeed = kSpeed
+	
 
+func _on_KnockbackTimer_timeout():
+	$KnockbackTimer.stop()
+	knockback = false
+func _on_CooldownHurtTimer_timeout():
+	$CooldownHurtTimer.stop()
+	
 func _on_Player_hurt(strength, knockbackTime, knockbackSpeed):
+	if $CooldownHurtTimer.is_stopped() == false:
+		return
+	
+	$CooldownHurtTimer.start()
+	$AudioStream2DHurt.stop()
+	$AudioStream2DHurt.play()
+	hit = true
+	lives -= strength
+	if(lives <= 0):
+		healthLabel.rect_scale.x = 0
+		velocity = Vector2.ZERO
+		emit_signal("destroyed")
+		return
+	healthLabel.rect_scale.x = lives
+	velocity = Vector2.ZERO
+	$AnimatedSprite.play("Hurt")
 	if knockbackTime > 0:
 		getKnockback(knockbackTime, knockbackSpeed)
-		return
-	if hit == false:
-		$AudioStream2DHurt.stop()
-		$AudioStream2DHurt.play()
-		hit = true
-		lives -= strength
-		if(lives <= 0):
-			healthLabel.rect_scale.x = 0
-			velocity = Vector2.ZERO
-			emit_signal("destroyed")
-			return
-		healthLabel.rect_scale.x = lives
-		velocity = Vector2.ZERO
-		$AnimatedSprite.play("Hurt")
 		
 func _on_AnimatedSprite_animation_finished():
 	if $AnimatedSprite.get_animation() == "Hurt":
 		hit = false
+		if start == false:
+			$AnimatedSprite.play("Idle")
+			return
 		if slowVelocity == true:
 			$AnimatedSprite.play("Idle")
+			return
 		else:
 			$AnimatedSprite.play("Movement")
+			return
 	elif $AnimatedSprite.get_animation() == "Explosion":
 		get_tree().reload_current_scene()
 
 func _on_Player_destroyed():
+	knockback = false
+	destroyed = true
+	$CollisionShape2D.disabled = true
 	$AudioStream2DExplosion.play()
 	$AnimatedSprite.play("Explosion")
