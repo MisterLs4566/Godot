@@ -82,12 +82,8 @@ animations = [ {
 
 [node name="Player2" type="Area2D"]
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="." instance=ExtResource( 2 )]
-scale = Vector2( 10, 10 )
+[node name="AnimatedSprite" parent="." instance=ExtResource( 2 )]
 frames = SubResource( 1 )
-animation = "Idle"
-playing = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." instance=ExtResource( 1 )]
-scale = Vector2( 5, 5 )
+[node name="CollisionShape2D" parent="." instance=ExtResource( 1 )]
 shape = SubResource( 7 )

@@ -142,6 +142,7 @@ func collision():
 				emit_signal("hurt", 2.5, 0, 0)
 			else:
 				return
+				
 func tileCollision():
 	pass
 
@@ -158,7 +159,7 @@ func _process(delta):
 		move_and_slide(velocity * speed)
 	else:
 		move_and_slide(velocity * speed/2)
-		
+
 func getKnockback(time, speed):
 	"""Knockback Timer einbauen, Knockback umsetzen"""
 	pass
@@ -180,7 +181,6 @@ func _on_Player_hurt(strength, knockbackTime, knockbackSpeed):
 		healthLabel.rect_scale.x = lives
 		velocity = Vector2.ZERO
 		$AnimatedSprite.play("Hurt")
-		
 		
 func _on_AnimatedSprite_animation_finished():
 	if $AnimatedSprite.get_animation() == "Hurt":

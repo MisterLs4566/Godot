@@ -35,6 +35,7 @@ func _ready():
 	
 	connect("explosion", self, "_on_Enemy_explosion")
 	connect("hurt", self, "_on_Enemy_hurt")
+	$CooldownHurtTimer.connect("timeout", self, "_on_CooldownHurtTimer_timeout")
 func _process(delta):
 	"""update health label"""
 	$EnemyHealthLabel.rect_position.x = position.x - 40
@@ -56,8 +57,12 @@ func _on_AnimatedSprite_animation_finished():
 	if  $AnimatedSprite.get_animation() == "Explosion":
 		visible = false
 		$CollisionShape2D.disabled = true
-	
+
 func _on_Enemy_hurt(strength, knockbackTime, knockbackSpeed):
+	if $CooldownHurtTimer.is_stopped() == false:
+		return
+	
+	$CooldownHurtTimer.start()
 	if lives >= 1:
 		lives -= strength
 		$Stream2DHurt.play()
@@ -67,6 +72,9 @@ func _on_Enemy_hurt(strength, knockbackTime, knockbackSpeed):
 		$CollisionShape2D.disabled = true
 		emit_signal("explosion")
 		$AnimatedSprite.play("Explosion")
-
+		
+func _on_CooldownHurtTimer_timeout():
+	$CooldownHurtTimer.stop()
+	
 func _on_Enemy_explosion():
 	$Stream2DExplosion.play()
