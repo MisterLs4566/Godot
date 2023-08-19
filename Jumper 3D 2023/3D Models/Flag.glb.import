@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dk71sm2p1wux8"
-path="res://.godot/imported/Jumper 3D-2023-Robot.gltf-a6c510f0d5069073f6fbf48ee3bf9cb6.scn"
+uid="uid://34rlo20c18qa"
+path="res://.godot/imported/Flag.glb-97c250febe3e10d8de934e13dc3dc1aa.scn"
 
 [deps]
 
-source_file="res://3D Models/Jumper 3D-2023-Robot.gltf"
-dest_files=["res://.godot/imported/Jumper 3D-2023-Robot.gltf-a6c510f0d5069073f6fbf48ee3bf9cb6.scn"]
+source_file="res://3D Models/Flag.glb"
+dest_files=["res://.godot/imported/Flag.glb-97c250febe3e10d8de934e13dc3dc1aa.scn"]
 
 [params]
 
