@@ -15,7 +15,7 @@ var collisionTile
 
 #Laser:
 
-var laserMaxDistance = 700 #500 #1500
+var laserMaxDistance = 500 #500 #1500
 var laserSpeed = 2000
 var speed = 500
 var knockbackSpeed
