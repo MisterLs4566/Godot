@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://x2m88kt61dsx"]
+
+[ext_resource type="PackedScene" uid="uid://oexe1fh7bjl6" path="res://3D Models/Flag.blend" id="1_56d6i"]
+[ext_resource type="Material" uid="uid://b2hybkc2gtnpb" path="res://Shaders/FlagMaterial.tres" id="2_2ietj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_efsec"]
+albedo_color = Color(0.807843, 0.627451, 0.117647, 1)
+
+[node name="Flag" instance=ExtResource("1_56d6i")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="flag_wood" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_efsec")
+
+[node name="Plane" parent="." index="1"]
+surface_material_override/0 = ExtResource("2_2ietj")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://ba3nbfc1lmk7j"]
+[gd_scene load_steps=19 format=3 uid="uid://ba3nbfc1lmk7j"]
 
 [ext_resource type="Script" path="res://Scripts/GameController.gd" id="1_c162j"]
 [ext_resource type="PackedScene" uid="uid://bv7byxnj6jao7" path="res://Prefabs/Sun.tscn" id="1_k2d0j"]
@@ -7,7 +7,20 @@
 [ext_resource type="PackedScene" uid="uid://d34bq2r13k6h2" path="res://Prefabs/Brick.tscn" id="5_gbjro"]
 [ext_resource type="Shader" path="res://Shaders/CameraSkyShaders.gdshader" id="6_iwg2n"]
 [ext_resource type="Script" path="res://Scripts/CameraController.gd" id="7_8avn4"]
-[ext_resource type="PackedScene" uid="uid://dr84h25vtxk6a" path="res://3D Models/Flag.blend" id="8_flypc"]
+[ext_resource type="PackedScene" uid="uid://x2m88kt61dsx" path="res://Prefabs/Flag.tscn" id="8_nkk2r"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bfd73"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_f2lvi"]
+sky_material = SubResource("ProceduralSkyMaterial_bfd73")
+
+[sub_resource type="Environment" id="Environment_0uy6o"]
+background_mode = 2
+sky = SubResource("Sky_f2lvi")
+tonemap_mode = 2
+glow_enabled = true
 
 [sub_resource type="SystemFont" id="SystemFont_er8em"]
 
@@ -31,12 +44,11 @@ material = SubResource("StandardMaterial3D_bfvqo")
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jacnr"]
 height = 2.00652
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_qt6d4"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_7k0dn"]
-
 [node name="LevelScene01" type="Node3D"]
 script = ExtResource("1_c162j")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0uy6o")
 
 [node name="Sun" parent="." instance=ExtResource("1_k2d0j")]
 light_indirect_energy = 0.0
@@ -201,14 +213,5 @@ shadow_enabled = true
 shadow_bias = 2.111
 omni_range = 6.0
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-mesh = SubResource("ArrayMesh_qt6d4")
-skeleton = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-shape = SubResource("BoxShape3D_7k0dn")
-
-[node name="Flag" parent="." instance=ExtResource("8_flypc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.32355, 0.0156322, -8.71786)
+[node name="Flag" parent="." instance=ExtResource("8_nkk2r")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -8.12263, 0.0156317, 9.34959)
