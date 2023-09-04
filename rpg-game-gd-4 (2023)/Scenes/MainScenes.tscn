@@ -1,6 +1,35 @@
-[gd_scene format=3 uid="uid://bgm1lka5vmdrl"]
+[gd_scene load_steps=6 format=3 uid="uid://bgm1lka5vmdrl"]
+
+[ext_resource type="Texture2D" uid="uid://vm3a7oj6m2ua" path="res://Assets/pixel art background.png" id="1_cm27j"]
+[ext_resource type="Texture2D" uid="uid://b623c4uhb6uq6" path="res://Assets/test.png" id="2_yj8f2"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_0u7up"]
+diffuse_texture = ExtResource("2_yj8f2")
+texture_filter = 1
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3m7lt"]
+texture = SubResource("CanvasTexture_0u7up")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_wvg3j"]
+tile_size = Vector2i(64, 64)
+sources/3 = SubResource("TileSetAtlasSource_3m7lt")
 
 [node name="Node2D" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(960, 540)
+zoom = Vector2(0.5, 0.5)
+
+[node name="PixelArtBackground" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(960, 540)
+texture = ExtResource("1_cm27j")
+
+[node name="TileMap" type="TileMap" parent="."]
+texture_filter = 1
+tile_set = SubResource("TileSet_wvg3j")
+cell_quadrant_size = 64
+format = 2
+layer_0/tile_data = PackedInt32Array(327684, 3, 0, 393220, 3, 0, 458756, 3, 0, 458757, 3, 0)
