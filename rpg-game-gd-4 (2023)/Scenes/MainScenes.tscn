@@ -177,7 +177,6 @@ animations = [{
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(960, 540)
-zoom = Vector2(0.5, 0.5)
 
 [node name="PixelArtBackground" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -196,10 +195,10 @@ script = ExtResource("3_il3br")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D"]
 texture_filter = 1
-position = Vector2(1024, 320)
+position = Vector2(896, 448)
 scale = Vector2(2.5, 2.5)
 sprite_frames = SubResource("SpriteFrames_5f5hj")
-animation = &"idle2"
+animation = &"walking_left"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_x7hrr")
