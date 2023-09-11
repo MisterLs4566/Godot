@@ -130,9 +130,11 @@ tile_data = PoolIntArray( -655381, 4, 0, -655380, 4, 0, -655379, 2, 0, -655378, 
 script = ExtResource( 5 )
 
 [node name="CollectableTiles" type="TileMap" parent="."]
+visible = false
 format = 1
 
 [node name="BackgroundTiles" type="TileMap" parent="."]
+visible = false
 format = 1
 
 [node name="TutorialLabelControls" type="Label" parent="."]

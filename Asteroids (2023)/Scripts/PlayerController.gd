@@ -3,7 +3,10 @@ extends KinematicBody2D
 """nodes"""
 var scene
 var healthLabel
-var tileMap
+
+var tileMapCollisions
+var tileMapCollectables
+var tileMapBackground4
 
 """variables"""
 var velocity = Vector2.ZERO
@@ -67,7 +70,7 @@ func _ready():
 	laser1 = preload("res://Prefabs/Laser.tscn")
 	healthLabel = get_node("/root/Node2D/GameUI/HealthLabel")
 	scene = get_node("/root/Node2D")
-	tileMap = get_node("/root/Node2D/TileMap")
+	tileMapCollisions = get_node("/root/Node2D/CollisionTiles")
 	
 	"""connect signals"""
 	
