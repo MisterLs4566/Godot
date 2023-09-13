@@ -10,8 +10,8 @@ func _ready():
 	VisualServer.set_default_clear_color(Color("#40318d"))
 
 func _on_Button_pressed():
-	get_tree().change_scene_to(load("res://Scenes/Level01.tscn"))
-
-func _process(delta):
+	if (get_tree().change_scene_to(load("res://Scenes/Level01.tscn"))) != OK:
+		print("switch to level01 didn't work")
+func _process(_delta):
 	if Input.is_action_just_released("ui_focus_next"):
 		_on_Button_pressed()

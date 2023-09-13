@@ -48,8 +48,10 @@ func _ready():
 	$AnimatedSprite.play("default")	
 	
 	"""connect signals"""
-	connect("explosion", self, "_on_Laser_explosion")
-	$cooldownTimerLaserDestroyed.connect("timeout", self, "_on_cooldownTimerLaserDestroyed_timeout")
+	if connect("explosion", self, "_on_Laser_explosion") != OK:
+		print("explosion connect in LaserController.gd didn't work")
+	if $cooldownTimerLaserDestroyed.connect("timeout", self, "_on_cooldownTimerLaserDestroyed_timeout") != OK:
+		print("timeout connect in LaserController didn't work")
 func collision(delta):
 	if get_slide_count() != 0:
 		for i in range(0, get_slide_count()):
