@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 """nodes"""
+var scene
 var player
 var enemyExplosionStream2D
 
@@ -30,11 +31,13 @@ signal explosion
 signal hurt(strength, knockbackTime, knockbackSpeed)
 
 """preloads"""
+var laser
 var laserInstance
 
 func _ready():
+	scene = get_node("/root/Node2D")
 	player = get_node("/root/Node2D/Player")
-	laserInstance = preload("res://Prefabs/Laser.tscn")
+	laser = preload("res://Prefabs/Laser.tscn")
 	$EnemyHealthLabel.set_as_toplevel(true)
 	
 	"""connect signals"""
@@ -43,24 +46,31 @@ func _ready():
 	connect("hurt", self, "_on_Enemy_hurt")
 	$CooldownHurtTimer.connect("timeout", self, "_on_CooldownHurtTimer_timeout")
 	$CooldownStartShootTimer.connect("timeout", self, "_on_CooldownStartShootTimer")
-func _process(delta):
-	"""update health label"""
+func updateUI():
 	$EnemyHealthLabel.rect_position.x = position.x - 40
 	$EnemyHealthLabel.rect_position.y = position.y - 160
-	
 	$EnemyHealthLabel.text = str(lives)
-	"""rotate toward player"""
+	if shootPossible == false:
+		$EnemyCooldownLabel.text = str(int($CooldownStartShootTimer.time_left) + 1);
+		
+func _process(delta):
+	"""update ui"""
+	updateUI()
+	"""rotate towards player"""
 	if position.distance_to(player.position) < maxPlayerDistance:
 		look_at(player.position)
 		rotation_degrees += 90
 		if shootPossible == false:
-			$CooldownStartShootTimer.wait_time = laserCooldown
-			$CooldownStartShootTimer.start()
+			if ($CooldownStartShootTimer.is_stopped()):
+				$CooldownStartShootTimer.wait_time = laserCooldown
+				$CooldownStartShootTimer.start()
 		else:
-			if $CooldownTimerSalve.is_stopped() == true:
-				$CooldownTimerSalve.wait_time = cooldownSalve
-				$CooldownTimerSalve.start()
-				instanciateLaser(laserInstance, laserMaxDistance, laserSpeed, laserStrength)
+			$CooldownTimerSalve.wait_time = cooldownSalve
+			$CooldownTimerSalve.start()
+			instanciateLaser(laser, laserMaxDistance, laserSpeed, laserStrength)
+			
+			"""Enemy kann bisher EINMAL schießen"""
+			shootPossible = false
 				
 	"""delete if not existing"""
 	
@@ -68,10 +78,21 @@ func _process(delta):
 		queue_free()
 
 func instanciateLaser(laserObject, maxDistance, speed, strength):
-	pass
+	if(projectiles < maxProjectiles and shootPossible == true):
+		projectiles += 1
+		laserInstance = laserObject.instance()
+		laserInstance.maxDistance = maxDistance
+		laserInstance.position = position
+		laserInstance.speed = speed
+		laserInstance.strength = laserStrength
+		laserInstance.target = "Player"
+		laserInstance.source = self
+		scene.add_child(laserInstance)
 	
 func _on_CooldownStartShootTimer():
-	print("shootPossible")
+	$CooldownStartShootTimer.stop()
+	$EnemyCooldownLabel.visible = false
+	shootPossible = true;
 
 func _on_AnimatedSprite_animation_finished():
 	if  $AnimatedSprite.get_animation() == "Hurt":

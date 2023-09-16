@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 """nodes"""
 
+var source
 var player
 var playerCooldownTimerSalve
 
@@ -43,7 +44,7 @@ func _ready():
 	explosionSoundEnemy = preload("res://Sounds/Enemy1Explosion.wav")
 	oldPosition = position
 	"""shoot"""
-	rotation_degrees = player.rotation_degrees
+	rotation_degrees = source.rotation_degrees
 	$AudioStream2DLaser.play()
 	$AnimatedSprite.play("default")	
 	
@@ -74,7 +75,8 @@ func _process(delta):
 	if isShooting == true:
 		if (position.distance_to(oldPosition) > maxDistance):
 			isShooting = false
-			checkPlayerCooldown()
+			if(target == "Enemy"):
+				checkPlayerCooldown()
 			$AnimatedSprite.play("Explosion")
 			emit_signal("explosion")
 

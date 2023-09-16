@@ -121,3 +121,14 @@ custom_styles/normal = SubResource( 16 )
 text = "3"
 align = 1
 valign = 1
+
+[node name="EnemyCooldownLabel" type="Label" parent="."]
+margin_left = 80.0
+margin_right = 160.0
+margin_bottom = 80.0
+custom_colors/font_color = Color( 0.403922, 0.713726, 0.741176, 1 )
+custom_fonts/font = SubResource( 15 )
+custom_styles/normal = SubResource( 16 )
+text = "3"
+align = 1
+valign = 1

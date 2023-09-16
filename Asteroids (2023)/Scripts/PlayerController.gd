@@ -98,6 +98,7 @@ func instanciateLaser(laserObject, maxDistance, speed, strength):
 		laserInstance.speed = speed
 		laserInstance.strength = laserStrength
 		laserInstance.target = "Enemy"
+		laserInstance.source = self
 		scene.add_child(laserInstance)
 
 func input():
@@ -173,8 +174,6 @@ func _process(delta):
 		move_and_slide(velocity * knockbackSpeed * -1)
 		return
 	
-
-		
 	input()
 	look_at(get_global_mouse_position())
 	rotation_degrees += 90
