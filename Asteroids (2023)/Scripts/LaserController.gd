@@ -47,7 +47,6 @@ func _ready():
 	rotation_degrees = source.rotation_degrees
 	$AudioStream2DLaser.play()
 	$AnimatedSprite.play("default")	
-	
 	"""connect signals"""
 	if connect("explosion", self, "_on_Laser_explosion") != OK:
 		print("explosion connect in LaserController.gd didn't work")
@@ -59,6 +58,7 @@ func collision(delta):
 			collision = get_slide_collision(i).collider as KinematicBody2D
 			collisionCollider = get_slide_collision(i).collider as CollisionObject2D
 			if collision.is_in_group(target):
+				print("target")
 				$CollisionShape2D.disabled = true
 				collision.emit_signal("hurt", strength, 0, 0)
 				velocity = Vector2.ZERO

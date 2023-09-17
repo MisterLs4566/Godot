@@ -93,12 +93,12 @@ func instanciateLaser(laserObject, maxDistance, speed, strength):
 	if(projectiles < maxProjectiles and shootPossible == true):
 		projectiles += 1
 		laserInstance = laserObject.instance()
+		laserInstance.source = self
 		laserInstance.maxDistance = maxDistance
 		laserInstance.position = position
 		laserInstance.speed = speed
 		laserInstance.strength = laserStrength
 		laserInstance.target = "Enemy"
-		laserInstance.source = self
 		scene.add_child(laserInstance)
 
 func input():

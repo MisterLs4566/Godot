@@ -39,6 +39,7 @@ func _ready():
 	player = get_node("/root/Node2D/Player")
 	laser = preload("res://Prefabs/Laser.tscn")
 	$EnemyHealthLabel.set_as_toplevel(true)
+	$EnemyCooldownLabel.set_as_toplevel(true)
 	
 	"""connect signals"""
 	
@@ -51,8 +52,13 @@ func updateUI():
 	$EnemyHealthLabel.rect_position.y = position.y - 160
 	$EnemyHealthLabel.text = str(lives)
 	if shootPossible == false:
-		$EnemyCooldownLabel.text = str(int($CooldownStartShootTimer.time_left) + 1);
-		
+		$EnemyCooldownLabel.rect_position.x = position.x - 40
+		$EnemyCooldownLabel.rect_position.y = position.y - 220
+		if $CooldownStartShootTimer.is_stopped() == false:
+			$EnemyCooldownLabel.text = str(int($CooldownStartShootTimer.time_left) + 1);
+			
+		else:
+			$EnemyCooldownLabel.text = str(laserCooldown)
 func _process(delta):
 	"""update ui"""
 	updateUI()
@@ -81,12 +87,15 @@ func instanciateLaser(laserObject, maxDistance, speed, strength):
 	if(projectiles < maxProjectiles and shootPossible == true):
 		projectiles += 1
 		laserInstance = laserObject.instance()
+		laserInstance.source = self
 		laserInstance.maxDistance = maxDistance
-		laserInstance.position = position
+		laserInstance.position = self.position
+		#print(self.position)
+		#print(laserInstance.position)
 		laserInstance.speed = speed
 		laserInstance.strength = laserStrength
 		laserInstance.target = "Player"
-		laserInstance.source = self
+		#laserInstance.source = self
 		scene.add_child(laserInstance)
 	
 func _on_CooldownStartShootTimer():
