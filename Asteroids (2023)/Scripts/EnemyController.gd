@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+var size = 160
 """nodes"""
 var scene
 var player
@@ -89,7 +90,8 @@ func instanciateLaser(laserObject, maxDistance, speed, strength):
 		laserInstance = laserObject.instance()
 		laserInstance.source = self
 		laserInstance.maxDistance = maxDistance
-		laserInstance.position = self.position
+		"""position vom Laser nicht korrekt, muss gefixt werden"""
+		laserInstance.position = position# + Vector2
 		#print(self.position)
 		#print(laserInstance.position)
 		laserInstance.speed = speed
