@@ -79,6 +79,7 @@ func _ready():
 	$CooldownTimerSalve.connect("timeout", self, "_on_CooldownTimerSalve_timeout")
 	$KnockbackTimer.connect("timeout", self, "_on_KnockbackTimer_timeout")
 	$CooldownHurtTimer.connect("timeout", self, "_on_CooldownHurtTimer_timeout")
+	$StopTimer.connect("timeout", self, "_on_StopTimer_timeout")
 	$AnimatedSprite.connect("animation_finished", self, "_on_AnimatedSprite_animation_finished")
 	
 func _on_CooldownTimerSalve_timeout():
@@ -100,6 +101,8 @@ func instanciateLaser(laserObject, maxDistance, speed, strength):
 		laserInstance.strength = laserStrength
 		laserInstance.target = "Enemy"
 		scene.add_child(laserInstance)
+
+"""Input Abfrage"""
 
 func input():
 	if Input.is_action_just_released("ui_accept"):
@@ -125,6 +128,7 @@ func input():
 		if(hit == false):
 			$AnimatedSprite.play("Idle")
 		slowVelocity = true
+		$StopTimer.start()
 	if Input.is_action_pressed("ui_accept"):
 		shootKeyPressed = true
 		if projectiles < maxProjectiles:
@@ -191,7 +195,6 @@ func getKnockback(time, kSpeed):
 	$KnockbackTimer.wait_time = time
 	$KnockbackTimer.start()
 	knockbackSpeed = kSpeed
-	
 
 func _on_KnockbackTimer_timeout():
 	$KnockbackTimer.stop()
@@ -240,3 +243,11 @@ func _on_Player_destroyed():
 	$CollisionShape2D.disabled = true
 	$AudioStream2DExplosion.play()
 	$AnimatedSprite.play("Explosion")
+
+func _on_StopTimer_timeout():
+	if not slowVelocity:
+		return
+	#print(velocity.length())
+	velocity /= 2
+	if velocity.length() < 0.25:
+		velocity = Vector2.ZERO

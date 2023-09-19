@@ -58,7 +58,7 @@ func collision(delta):
 			collision = get_slide_collision(i).collider as KinematicBody2D
 			collisionCollider = get_slide_collision(i).collider as CollisionObject2D
 			if collision.is_in_group(target):
-				print("target")
+				print(target)
 				$CollisionShape2D.disabled = true
 				collision.emit_signal("hurt", strength, 0, 0)
 				velocity = Vector2.ZERO

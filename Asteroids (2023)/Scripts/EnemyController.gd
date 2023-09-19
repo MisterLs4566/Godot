@@ -90,13 +90,14 @@ func instanciateLaser(laserObject, maxDistance, speed, strength):
 		laserInstance = laserObject.instance()
 		laserInstance.source = self
 		laserInstance.maxDistance = maxDistance
-		"""position vom Laser nicht korrekt, muss gefixt werden"""
-		laserInstance.position = position# + Vector2
+		"""Korrektur der Position des Lasers durch einen senkrechten Vektor und Vektoraddition (nicht optimal)"""
+		laserInstance.position = position + (Vector2(cos(rotation), sin(rotation)).rotated(deg2rad(-90))) * size/2
 		#print(self.position)
 		#print(laserInstance.position)
 		laserInstance.speed = speed
 		laserInstance.strength = laserStrength
 		laserInstance.target = "Player"
+		laserInstance.oldPosition = position
 		#laserInstance.source = self
 		scene.add_child(laserInstance)
 	
