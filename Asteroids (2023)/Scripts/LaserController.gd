@@ -57,8 +57,9 @@ func collision(delta):
 		for i in range(0, get_slide_count()):
 			collision = get_slide_collision(i).collider as KinematicBody2D
 			collisionCollider = get_slide_collision(i).collider as CollisionObject2D
+			if collision == null:
+				return
 			if collision.is_in_group(target):
-				print(target)
 				$CollisionShape2D.disabled = true
 				collision.emit_signal("hurt", strength, 0, 0)
 				velocity = Vector2.ZERO
@@ -75,17 +76,17 @@ func _process(delta):
 	if isShooting == true:
 		if (position.distance_to(oldPosition) > maxDistance):
 			isShooting = false
-			if(target == "Enemy"):
-				checkPlayerCooldown()
+			checkPlayerCooldown()
 			$AnimatedSprite.play("Explosion")
 			emit_signal("explosion")
 
 func checkPlayerCooldown():
-	if player.projectiles > 0:
-		player.projectiles -= 1
-	if player.projectiles == 0:
-		player.laserCooldown = false
-		playerCooldownTimerSalve.stop()
+	if source.projectiles > 0:
+		source.projectiles -= 1
+	if source.projectiles == 0:
+		source.laserCooldown = false
+		source.CooldownTimerSalve.stop()
+		#playerCooldownTimerSalve.stop()
 		#player.shootKeyPressed = false
 
 func _on_AnimatedSprite_animation_finished():

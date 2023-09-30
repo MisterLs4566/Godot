@@ -7,6 +7,7 @@ var healthLabel
 var tileMapCollisions
 var tileMapCollectables
 var tileMapBackground4
+var CooldownTimerSalve
 
 """variables"""
 var velocity = Vector2.ZERO
@@ -76,6 +77,8 @@ func _ready():
 	
 	connect("destroyed", self, "_on_Player_destroyed")
 	connect("hurt", self, "_on_Player_hurt")
+	CooldownTimerSalve = $CooldownTimerSalve
+	
 	$CooldownTimerSalve.connect("timeout", self, "_on_CooldownTimerSalve_timeout")
 	$KnockbackTimer.connect("timeout", self, "_on_KnockbackTimer_timeout")
 	$CooldownHurtTimer.connect("timeout", self, "_on_CooldownHurtTimer_timeout")
@@ -94,6 +97,8 @@ func instanciateLaser(laserObject, maxDistance, speed, strength):
 	if(projectiles < maxProjectiles and shootPossible == true):
 		projectiles += 1
 		laserInstance = laserObject.instance()
+		laserInstance.set_collision_mask_bit(2, true)
+		laserInstance.set_collision_layer_bit(1, true)
 		laserInstance.source = self
 		laserInstance.maxDistance = maxDistance
 		laserInstance.position = position
@@ -152,7 +157,6 @@ func collision():
 				return
 			collisionBody = get_slide_collision(i).collider as KinematicBody2D
 			collisionCollider = get_slide_collision(i).collider as CollisionObject2D
-			
 			if typeof(collisionCollider) != 0:
 				if collisionBody.is_in_group("Enemy"):
 					emit_signal("hurt", collisionCollider.touchStrength, 0.1, 1000)

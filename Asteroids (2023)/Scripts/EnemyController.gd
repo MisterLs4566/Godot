@@ -5,6 +5,8 @@ var size = 160
 var scene
 var player
 var enemyExplosionStream2D
+var CooldownTimerSalve
+var laserCooldown
 
 """switches"""
 
@@ -17,8 +19,6 @@ var lives = 3
 var fireCooldown
 var cooldownSalve = 0.1
 
-"""3 Sekunden Cooldown für den Laser, wenn Player in Sichtfeld des Enemy kommt"""
-var laserCooldown = 3
 var touchStrength = 3.5
 var laserStrength = 1
 var laserMaxDistance = 500
@@ -39,6 +39,7 @@ func _ready():
 	scene = get_node("/root/Node2D")
 	player = get_node("/root/Node2D/Player")
 	laser = preload("res://Prefabs/Laser.tscn")
+	CooldownTimerSalve = $CooldownTimerSalve
 	$EnemyHealthLabel.set_as_toplevel(true)
 	$EnemyCooldownLabel.set_as_toplevel(true)
 	
@@ -57,9 +58,8 @@ func updateUI():
 		$EnemyCooldownLabel.rect_position.y = position.y - 220
 		if $CooldownStartShootTimer.is_stopped() == false:
 			$EnemyCooldownLabel.text = str(int($CooldownStartShootTimer.time_left) + 1);
-			
 		else:
-			$EnemyCooldownLabel.text = str(laserCooldown)
+			$EnemyCooldownLabel.text = str($CooldownStartShootTimer.wait_time)
 func _process(delta):
 	"""update ui"""
 	updateUI()
@@ -69,14 +69,11 @@ func _process(delta):
 		rotation_degrees += 90
 		if shootPossible == false:
 			if ($CooldownStartShootTimer.is_stopped()):
-				$CooldownStartShootTimer.wait_time = laserCooldown
 				$CooldownStartShootTimer.start()
 		else:
 			$CooldownTimerSalve.wait_time = cooldownSalve
 			$CooldownTimerSalve.start()
 			instanciateLaser(laser, laserMaxDistance, laserSpeed, laserStrength)
-			
-			"""Enemy kann bisher EINMAL schießen"""
 			shootPossible = false
 				
 	"""delete if not existing"""
@@ -88,6 +85,8 @@ func instanciateLaser(laserObject, maxDistance, speed, strength):
 	if(projectiles < maxProjectiles and shootPossible == true):
 		projectiles += 1
 		laserInstance = laserObject.instance()
+		laserInstance.set_collision_mask_bit(1, true)
+		laserInstance.set_collision_layer_bit(2, true)
 		laserInstance.source = self
 		laserInstance.maxDistance = maxDistance
 		"""Korrektur der Position des Lasers durch einen senkrechten Vektor und Vektoraddition (nicht optimal)"""
@@ -103,7 +102,6 @@ func instanciateLaser(laserObject, maxDistance, speed, strength):
 	
 func _on_CooldownStartShootTimer():
 	$CooldownStartShootTimer.stop()
-	$EnemyCooldownLabel.visible = false
 	shootPossible = true;
 
 func _on_AnimatedSprite_animation_finished():
@@ -112,7 +110,7 @@ func _on_AnimatedSprite_animation_finished():
 	if  $AnimatedSprite.get_animation() == "Explosion":
 		visible = false
 		$CollisionShape2D.disabled = true
-
+		queue_free()
 func _on_Enemy_hurt(strength, knockbackTime, knockbackSpeed):
 	if $CooldownHurtTimer.is_stopped() == false:
 		return

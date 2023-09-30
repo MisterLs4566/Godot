@@ -83,8 +83,8 @@ bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
 [node name="Enemy" type="KinematicBody2D" groups=["Enemy"]]
 rotation = -6.28319
-collision_layer = 2
-collision_mask = 3
+collision_layer = 4
+collision_mask = 6
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
@@ -107,6 +107,7 @@ bus = "GameSounds"
 stream = ExtResource( 7 )
 
 [node name="CooldownStartShootTimer" type="Timer" parent="."]
+wait_time = 3.0
 
 [node name="CooldownHurtTimer" type="Timer" parent="."]
 wait_time = 0.1
