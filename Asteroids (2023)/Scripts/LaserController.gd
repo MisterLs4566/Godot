@@ -61,7 +61,10 @@ func collision(delta):
 				return
 			if collision.is_in_group(target):
 				$CollisionShape2D.disabled = true
-				collision.emit_signal("hurt", strength, 0.1, 1000, self)
+				if(target == "Player"):
+					collision.emit_signal("hurt", strength, 0.1, 1000, Vector2(position.x, position.y))
+				else:
+					collision.emit_signal("hurt", strength, 0.1, 1000)
 				velocity = Vector2.ZERO
 				#checkPlayerCooldown()
 				$AnimatedSprite.play("Explosion")

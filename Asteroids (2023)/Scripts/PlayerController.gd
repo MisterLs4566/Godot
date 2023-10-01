@@ -155,13 +155,14 @@ func collision():
 			coll = get_slide_collision(i).collider
 			if(coll.is_in_group("collisionTiles")):
 				knockback = true
-				emit_signal("hurt", 2.5, 0.1, 1000, coll)
+				var collSource = Vector2(get_slide_collision(i).position.x, get_slide_collision(i).position.y)
+				emit_signal("hurt", 2.5, 0.1, 1000, collSource)
 				return
 			collisionBody = get_slide_collision(i).collider as KinematicBody2D
 			collisionCollider = get_slide_collision(i).collider as CollisionObject2D
 			if typeof(collisionCollider) != 0:
 				if collisionBody.is_in_group("Enemy"):
-					emit_signal("hurt", collisionCollider.touchStrength, 0.1, 1000, collisionBody)
+					emit_signal("hurt", collisionCollider.touchStrength, 0.1, 1000, Vector2(collisionBody.position.x, collisionBody.position.y))
 			
 				
 func tileCollision():
@@ -199,7 +200,8 @@ func _process(delta):
 func getKnockback(time, kSpeed, kSource):
 	"""knockbackDirection einbauen"""
 	var vecP = Vector2(position.x, position.y)
-	var vecSource = Vector2(kSource.get_position().x, kSource.get_position().y)
+	#var vecSource = Vector2(kSource.get_position().x, kSource.get_position().y)
+	var vecSource = kSource
 	"""knockbackVelocity noch fehlerhaft"""
 	knockbackVelocity = vecP - vecSource
 	start = false
