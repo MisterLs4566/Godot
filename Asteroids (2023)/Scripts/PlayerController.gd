@@ -23,6 +23,7 @@ var laserMaxDistance = 500 #500 #1500
 var laserSpeed = 2000
 var speed = 500
 var knockbackSpeed
+var knockbackVelocity = Vector2.ZERO
 var laserStrength = 1
 
 """switches"""
@@ -47,6 +48,7 @@ var collisionCollider
 
 """Collider"""
 var coll
+var collKnockback
 
 """preloads"""
 var boostSound
@@ -58,7 +60,7 @@ var laserInstance
 
 """signals"""
 signal shoot # -> laser
-signal hurt(strength, knockbackTime, knockbackSpeed) # -> self
+signal hurt(strength, knockbackTime, knockbackSpeed, kSource) # -> self
 signal destroyed # -> self
 
 func _ready():
@@ -153,13 +155,13 @@ func collision():
 			coll = get_slide_collision(i).collider
 			if(coll.is_in_group("collisionTiles")):
 				knockback = true
-				emit_signal("hurt", 2.5, 0.1, 1000)
+				emit_signal("hurt", 2.5, 0.1, 1000, coll)
 				return
 			collisionBody = get_slide_collision(i).collider as KinematicBody2D
 			collisionCollider = get_slide_collision(i).collider as CollisionObject2D
 			if typeof(collisionCollider) != 0:
 				if collisionBody.is_in_group("Enemy"):
-					emit_signal("hurt", collisionCollider.touchStrength, 0.1, 1000)
+					emit_signal("hurt", collisionCollider.touchStrength, 0.1, 1000, collisionBody)
 			
 				
 func tileCollision():
@@ -178,8 +180,9 @@ func _process(delta):
 			$AnimatedSprite.play("Hurt")
 		velocity.x = 0
 		velocity.y = -1
-		velocity = velocity.rotated(rotation).normalized()
-		move_and_slide(velocity * knockbackSpeed * -1)
+		#velocity = velocity.rotated(rotation).normalized()
+		velocity = knockbackVelocity.normalized()
+		move_and_slide(velocity * knockbackSpeed)
 		return
 	
 	input()
@@ -192,8 +195,13 @@ func _process(delta):
 		move_and_slide(velocity * speed)
 	else:
 		move_and_slide(velocity * speed/2)
-func getKnockback(time, kSpeed):
-	"""Knockback Timer einbauen, Knockback umsetzen"""
+"""Richtung des Knockbacks (von der Quelle weg) einbauen"""
+func getKnockback(time, kSpeed, kSource):
+	"""knockbackDirection einbauen"""
+	var vecP = Vector2(position.x, position.y)
+	var vecSource = Vector2(kSource.get_position().x, kSource.get_position().y)
+	"""knockbackVelocity noch fehlerhaft"""
+	knockbackVelocity = vecP - vecSource
 	start = false
 	knockback = true
 	$KnockbackTimer.wait_time = time
@@ -206,10 +214,9 @@ func _on_KnockbackTimer_timeout():
 func _on_CooldownHurtTimer_timeout():
 	$CooldownHurtTimer.stop()
 	
-func _on_Player_hurt(strength, knockbackTime, knockbackSpeed):
+func _on_Player_hurt(strength, knockbackTime, knockbackSpeed, knockbackSource):
 	if $CooldownHurtTimer.is_stopped() == false:
 		return
-	
 	$CooldownHurtTimer.start()
 	$AudioStream2DHurt.stop()
 	$AudioStream2DHurt.play()
@@ -224,7 +231,7 @@ func _on_Player_hurt(strength, knockbackTime, knockbackSpeed):
 	velocity = Vector2.ZERO
 	$AnimatedSprite.play("Hurt")
 	if knockbackTime > 0:
-		getKnockback(knockbackTime, knockbackSpeed)
+		getKnockback(knockbackTime, knockbackSpeed, knockbackSource)
 		
 func _on_AnimatedSprite_animation_finished():
 	if $AnimatedSprite.get_animation() == "Hurt":

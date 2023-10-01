@@ -61,7 +61,7 @@ func collision(delta):
 				return
 			if collision.is_in_group(target):
 				$CollisionShape2D.disabled = true
-				collision.emit_signal("hurt", strength, 0, 0)
+				collision.emit_signal("hurt", strength, 0.1, 1000, self)
 				velocity = Vector2.ZERO
 				#checkPlayerCooldown()
 				$AnimatedSprite.play("Explosion")
@@ -76,11 +76,11 @@ func _process(delta):
 	if isShooting == true:
 		if (position.distance_to(oldPosition) > maxDistance):
 			isShooting = false
-			checkPlayerCooldown()
+			checkSourceCooldown()
 			$AnimatedSprite.play("Explosion")
 			emit_signal("explosion")
 
-func checkPlayerCooldown():
+func checkSourceCooldown():
 	if source.projectiles > 0:
 		source.projectiles -= 1
 	if source.projectiles == 0:
@@ -91,13 +91,13 @@ func checkPlayerCooldown():
 
 func _on_AnimatedSprite_animation_finished():
 	if $AnimatedSprite.get_animation() == "Explosion":
-		#checkPlayerCooldown() #eigentlich die Einstellung für den cooldown (cooldown erst aufgehoben, wenn Laser gelöscht)
-							   # =>checkPlayerCooldown an anderen Stellen im Code entfernen
+		#checkSourceCooldown() #eigentlich die Einstellung für den cooldown (cooldown erst aufgehoben, wenn Laser gelöscht)
+							   # =>checkSourceCooldown an anderen Stellen im Code entfernen
 		visible = false
 		
 
 func _on_Laser_explosion():
 	$AudioStream2DLaserExplosion.play()
 func _on_cooldownTimerLaserDestroyed_timeout():
-	checkPlayerCooldown()
+	checkSourceCooldown()
 	queue_free()
