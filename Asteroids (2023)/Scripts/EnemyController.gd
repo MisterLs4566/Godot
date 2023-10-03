@@ -35,6 +35,9 @@ signal hurt(strength, knockbackTime, knockbackSpeed)
 var laser
 var laserInstance
 
+var velocity = Vector2.ZERO
+var speed = 500
+
 func _ready():
 	scene = get_node("/root/Node2D")
 	player = get_node("/root/Node2D/Player")
@@ -60,13 +63,17 @@ func updateUI():
 			$EnemyCooldownLabel.text = str(int($CooldownStartShootTimer.time_left) + 1);
 		else:
 			$EnemyCooldownLabel.text = str($CooldownStartShootTimer.wait_time)
+func move():
+	pass
 func _process(delta):
 	"""update ui"""
 	updateUI()
 	"""rotate towards player"""
 	if position.distance_to(player.position) < maxPlayerDistance:
+		self.move()
 		look_at(player.position)
 		rotation_degrees += 90
+		
 		if shootPossible == false:
 			if ($CooldownStartShootTimer.is_stopped()):
 				$CooldownStartShootTimer.start()
