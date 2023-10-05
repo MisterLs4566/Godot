@@ -84,6 +84,8 @@ func _process(delta):
 			emit_signal("explosion")
 
 func checkSourceCooldown():
+	if is_instance_valid(source) == false:
+		return
 	if source.projectiles > 0:
 		source.projectiles -= 1
 	if source.projectiles == 0:

@@ -68,9 +68,9 @@ func move():
 func _process(delta):
 	"""update ui"""
 	updateUI()
+	self.move()
 	"""rotate towards player"""
 	if position.distance_to(player.position) < maxPlayerDistance:
-		self.move()
 		look_at(player.position)
 		rotation_degrees += 90
 		
@@ -82,7 +82,7 @@ func _process(delta):
 			$CooldownTimerSalve.start()
 			instanciateLaser(laser, laserMaxDistance, laserSpeed, laserStrength)
 			shootPossible = false
-				
+						
 	"""delete if not existing"""
 	
 	if(visible == false and $Stream2DExplosion.playing == false):
