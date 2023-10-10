@@ -13,7 +13,7 @@ var CooldownTimerSalve
 var velocity = Vector2.ZERO
 var level
 var projectiles = 0
-var maxProjectiles = 1  #2 #10 #20 #100
+var maxProjectiles = 2  #2 #10 #20 #100
 var cooldownSalve = 0.1 #0.2 #0.01
 var collisionTile
 
@@ -21,7 +21,7 @@ var collisionTile
 
 var laserMaxDistance = 500 #500 #1500
 var laserSpeed = 2000
-var speed = 500
+var speed = 600
 var knockbackSpeed
 var knockbackVelocity = Vector2.ZERO
 var laserStrength = 1
@@ -82,11 +82,16 @@ func _ready():
 	CooldownTimerSalve = $CooldownTimerSalve
 	
 	$CooldownTimerSalve.connect("timeout", self, "_on_CooldownTimerSalve_timeout")
+	$CooldownTimerSalve2.connect("timeout", self, "_on_CooldownTimerSalve2_timeout")
 	$KnockbackTimer.connect("timeout", self, "_on_KnockbackTimer_timeout")
 	$CooldownHurtTimer.connect("timeout", self, "_on_CooldownHurtTimer_timeout")
 	$StopTimer.connect("timeout", self, "_on_StopTimer_timeout")
 	$AnimatedSprite.connect("animation_finished", self, "_on_AnimatedSprite_animation_finished")
 	
+func _on_CooldownTimerSalve2_timeout():
+	Input.action_press("ui_accept");
+	$CooldownTimerSalve2.stop()
+
 func _on_CooldownTimerSalve_timeout():
 	$CooldownTimerSalve.stop()
 	if shootKeyPressed == true and projectiles < maxProjectiles:
@@ -94,7 +99,7 @@ func _on_CooldownTimerSalve_timeout():
 	if projectiles < maxProjectiles and maxProjectiles > 1:
 		$CooldownTimerSalve.wait_time = cooldownSalve
 		$CooldownTimerSalve.start()
-	
+
 func instanciateLaser(laserObject, maxDistance, speed, strength):
 	if(projectiles < maxProjectiles and shootPossible == true):
 		projectiles += 1
@@ -144,7 +149,9 @@ func input():
 				laserCooldown = true
 				$CooldownTimerSalve.wait_time = cooldownSalve
 				$CooldownTimerSalve.start()
-				
+			else:
+				$CooldownTimerSalve2.wait_time = cooldownSalve
+				$CooldownTimerSalve2.start()
 	if Input.is_action_just_pressed("ui_end"):
 		get_tree().change_scene_to(menuScene)
 		#pass
@@ -164,7 +171,6 @@ func collision():
 				if collisionBody.is_in_group("Enemy"):
 					emit_signal("hurt", collisionCollider.touchStrength, 0.1, 1000, Vector2(collisionBody.position.x, collisionBody.position.y))
 			
-				
 func tileCollision():
 	pass
 
