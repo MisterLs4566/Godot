@@ -13,9 +13,10 @@ var CooldownTimerSalve
 var velocity = Vector2.ZERO
 var level
 var projectiles = 0
-var maxProjectiles = 2  #2 #10 #20 #100
-var cooldownSalve = 0.1 #0.2 #0.01
+var maxProjectiles = 1  #2 #10 #20 #100
+var cooldownSalve = 0.2 #0.2 #0.01
 var collisionTile
+var laserQueue = 0
 
 #Laser:
 
@@ -38,7 +39,8 @@ var destroyed = false
 var shootPossible = true #sollte eigentlich erst aktiviert werden, wenn der Spieler trigger berührt hat
 
 var lives = 6.5
-
+var oldLives = 6.5
+var healthStep = 3
 
 """KinematicBody2D"""
 var collisionBody
@@ -82,15 +84,10 @@ func _ready():
 	CooldownTimerSalve = $CooldownTimerSalve
 	
 	$CooldownTimerSalve.connect("timeout", self, "_on_CooldownTimerSalve_timeout")
-	$CooldownTimerSalve2.connect("timeout", self, "_on_CooldownTimerSalve2_timeout")
 	$KnockbackTimer.connect("timeout", self, "_on_KnockbackTimer_timeout")
 	$CooldownHurtTimer.connect("timeout", self, "_on_CooldownHurtTimer_timeout")
 	$StopTimer.connect("timeout", self, "_on_StopTimer_timeout")
 	$AnimatedSprite.connect("animation_finished", self, "_on_AnimatedSprite_animation_finished")
-	
-func _on_CooldownTimerSalve2_timeout():
-	Input.action_press("ui_accept");
-	$CooldownTimerSalve2.stop()
 
 func _on_CooldownTimerSalve_timeout():
 	$CooldownTimerSalve.stop()
@@ -141,17 +138,19 @@ func input():
 			$AnimatedSprite.play("Idle")
 		slowVelocity = true
 		$StopTimer.start()
-	if Input.is_action_pressed("ui_accept"):
+	if Input.is_action_pressed("ui_accept") or laserQueue>=1:
 		shootKeyPressed = true
 		if projectiles < maxProjectiles:
 			if ($CooldownTimerSalve.is_stopped() == true or(projectiles == 0)) and laserCooldown == false:
+				if laserQueue>=1:
+					laserQueue-=1
 				instanciateLaser(laser1, laserMaxDistance, laserSpeed, laserStrength)
 				laserCooldown = true
 				$CooldownTimerSalve.wait_time = cooldownSalve
 				$CooldownTimerSalve.start()
-			else:
-				$CooldownTimerSalve2.wait_time = cooldownSalve
-				$CooldownTimerSalve2.start()
+		else:
+			#laserQueue = 1
+			pass
 	if Input.is_action_just_pressed("ui_end"):
 		get_tree().change_scene_to(menuScene)
 		#pass
@@ -165,6 +164,21 @@ func collision():
 				var collSource = Vector2(get_slide_collision(i).position.x, get_slide_collision(i).position.y)
 				emit_signal("hurt", 2.5, 0.1, 1000, collSource)
 				return
+			elif coll.is_in_group("laserSalveCollectable"):
+				maxProjectiles = 2  #2 #10 #20 #100
+				cooldownSalve = 0.2 #0.2 #0.01
+				coll.get_child(1).disabled = true
+				coll.queue_free()
+				return
+			elif coll.is_in_group("HealthCollectable"):
+				if(lives <= oldLives - healthStep):
+					lives += healthStep
+				else:
+					lives = oldLives
+				coll.get_child(1).disabled = true
+				coll.queue_free()
+				updateUI()
+				return
 			collisionBody = get_slide_collision(i).collider as KinematicBody2D
 			collisionCollider = get_slide_collision(i).collider as CollisionObject2D
 			if typeof(collisionCollider) != 0:
@@ -174,11 +188,13 @@ func collision():
 func tileCollision():
 	pass
 
+func updateUI():
+	healthLabel.rect_scale.x = lives
+
 func _process(delta):
 	if destroyed == true:
 		return
 	#print(projectiles)
-	
 	collision()	
 	tileCollision()
 	if knockback == true:

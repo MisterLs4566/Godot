@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Prefabs/Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Prefabs/Cameras/GameCamera.tscn" type="PackedScene" id=2]
@@ -11,6 +11,8 @@
 [ext_resource path="res://Prefabs/GameUI.tscn" type="PackedScene" id=9]
 [ext_resource path="res://TileSets/TileSetCollectables.tres" type="TileSet" id=10]
 [ext_resource path="res://Prefabs/Enemy2.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Prefabs/Collectable1.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Prefabs/HealthCollectable.tscn" type="PackedScene" id=13]
 
 [sub_resource type="DynamicFont" id=1]
 size = 80
@@ -33,19 +35,19 @@ var_name = "HELLOWORLD"
 data = {
 "base_type": "Label",
 "functions": [ {
-"data_connections": [  ],
-"function_id": -1,
-"name": "f_312843592",
-"nodes": [  ],
-"scroll": Vector2( -256.882, -251.978 ),
-"sequence_connections": [  ]
-}, {
 "data_connections": [ 3, 0, 2, 0 ],
 "function_id": 1,
 "name": "new_function",
 "nodes": [ 1, Vector2( 0, -60 ), SubResource( 5 ), 2, Vector2( 0, 20 ), SubResource( 6 ), 3, Vector2( -40, 140 ), SubResource( 7 ) ],
 "scroll": Vector2( -50, -100 ),
 "sequence_connections": [ 1, 0, 2 ]
+}, {
+"data_connections": [  ],
+"function_id": -1,
+"name": "f_312843592",
+"nodes": [  ],
+"scroll": Vector2( -256.882, -251.978 ),
+"sequence_connections": [  ]
 } ],
 "is_tool_script": false,
 "signals": [  ],
@@ -134,14 +136,23 @@ position = Vector2( -1760, -240 )
 [node name="Enemy3" parent="." instance=ExtResource( 11 )]
 position = Vector2( -3200, -800 )
 rotation = -4.46638e-06
+collision_layer = 4
+collision_mask = 6
 
 [node name="Enemy4" parent="." instance=ExtResource( 11 )]
 position = Vector2( -4000, -800 )
 rotation = -4.46638e-06
+collision_layer = 4
+collision_mask = 6
+
+[node name="Collectable1" parent="." instance=ExtResource( 12 )]
+position = Vector2( -2240, 80 )
+
+[node name="Collectable2" parent="." instance=ExtResource( 13 )]
+position = Vector2( -1600, 80 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( -240, 80 )
-collision_mask = 12
 
 [node name="Camera2D" parent="Player" instance=ExtResource( 2 )]
 physics_interpolation_mode = 2
