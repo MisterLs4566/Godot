@@ -91,7 +91,6 @@ script = ExtResource( 2 )
 scale = Vector2( 10, 10 )
 frames = SubResource( 1 )
 animation = "Idle"
-frame = 2
 playing = true
 script = ExtResource( 5 )
 

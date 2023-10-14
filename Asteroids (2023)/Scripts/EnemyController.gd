@@ -43,6 +43,7 @@ func _ready():
 	player = get_node("/root/Node2D/Player")
 	laser = preload("res://Prefabs/Laser.tscn")
 	CooldownTimerSalve = $CooldownTimerSalve
+	$CooldownHurtTimer.wait_time = 0.05
 	$EnemyHealthLabel.set_as_toplevel(true)
 	$EnemyCooldownLabel.set_as_toplevel(true)
 	

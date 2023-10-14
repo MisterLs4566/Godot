@@ -166,7 +166,7 @@ func collision():
 				return
 			elif coll.is_in_group("laserSalveCollectable"):
 				maxProjectiles = 2  #2 #10 #20 #100
-				cooldownSalve = 0.2 #0.2 #0.01
+				cooldownSalve = 0.1 #0.2 #0.01
 				coll.get_child(1).disabled = true
 				coll.queue_free()
 				return

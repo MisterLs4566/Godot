@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Fonts/Minecraft.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Prefabs/HealthLabel.tscn" type="PackedScene" id=2]
@@ -15,6 +15,17 @@ content_margin_top = 64.0
 content_margin_bottom = 0.0
 bg_color = Color( 0, 0, 0, 0 )
 
+[sub_resource type="DynamicFont" id=7]
+size = 128
+outline_size = 4
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+content_margin_left = 32.0
+content_margin_top = 32.0
+bg_color = Color( 0, 0, 0, 1 )
+
 [node name="CanvasLayer" type="CanvasLayer"]
 
 [node name="PlayerLabel" type="Label" parent="."]
@@ -25,3 +36,15 @@ text = "PLAYER"
 [node name="HealthLabel" parent="." instance=ExtResource( 2 )]
 
 [node name="HealthLabel2Border" parent="." instance=ExtResource( 3 )]
+
+[node name="E" type="Label" parent="."]
+margin_left = 1760.0
+margin_top = 920.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 7 )
+custom_styles/normal = SubResource( 8 )
+text = "E"
