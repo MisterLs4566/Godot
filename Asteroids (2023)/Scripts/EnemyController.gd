@@ -90,6 +90,8 @@ func _process(delta):
 		queue_free()
 
 func instanciateLaser(laserObject, maxDistance, speed, strength):
+	if visible == false:
+		return
 	if(projectiles < maxProjectiles and shootPossible == true):
 		projectiles += 1
 		laserInstance = laserObject.instance()

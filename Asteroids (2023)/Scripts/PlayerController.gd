@@ -23,6 +23,7 @@ var laserQueue = 0
 var laserMaxDistance = 500 #500 #1500
 var laserSpeed = 2000
 var speed = 600
+var speedStep = 100
 var knockbackSpeed
 var knockbackVelocity = Vector2.ZERO
 var laserStrength = 1
@@ -138,6 +139,8 @@ func input():
 			$AnimatedSprite.play("Idle")
 		slowVelocity = true
 		$StopTimer.start()
+	if Input.is_action_just_pressed("ui_focus_next"):
+		heal(healthStep)
 	if Input.is_action_pressed("ui_accept") or laserQueue>=1:
 		shootKeyPressed = true
 		if projectiles < maxProjectiles:
@@ -154,7 +157,13 @@ func input():
 	if Input.is_action_just_pressed("ui_end"):
 		get_tree().change_scene_to(menuScene)
 		#pass
-		
+func heal(boost):
+	$AudioStream2DHealing.play()
+	if(lives <= oldLives - healthStep):
+		lives += healthStep
+	else:
+		lives = oldLives
+	updateUI()
 func collision():
 	if get_slide_count() != 0:
 		for i in range(0, get_slide_count()):
@@ -171,13 +180,14 @@ func collision():
 				coll.queue_free()
 				return
 			elif coll.is_in_group("HealthCollectable"):
-				if(lives <= oldLives - healthStep):
-					lives += healthStep
-				else:
-					lives = oldLives
+				heal(healthStep)
 				coll.get_child(1).disabled = true
 				coll.queue_free()
-				updateUI()
+				return
+			elif coll.is_in_group("boostCollectable"):
+				speed += speedStep
+				coll.get_child(1).disabled = true
+				coll.queue_free()
 				return
 			collisionBody = get_slide_collision(i).collider as KinematicBody2D
 			collisionCollider = get_slide_collision(i).collider as CollisionObject2D

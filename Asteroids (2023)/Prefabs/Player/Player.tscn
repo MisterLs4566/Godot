@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Prefabs/PlayerCollisionShape2D.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/PlayerController.gd" type="Script" id=2]
 [ext_resource path="res://Prefabs/PlayerSprite.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Sounds/PlayerBoostSound.wav" type="AudioStream" id=4]
+[ext_resource path="res://Sounds/healingSound.wav" type="AudioStream" id=5]
 [ext_resource path="res://Sounds/PlayerExplosionSound.wav" type="AudioStream" id=7]
 [ext_resource path="res://Sounds/PlayerHurtSound.wav" type="AudioStream" id=8]
 
@@ -31,6 +32,9 @@ bus = "GameSounds"
 [node name="AudioStream2DExplosion" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 7 )
 bus = "GameSounds"
+
+[node name="AudioStream2DHealing" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 5 )
 
 [node name="CooldownTimerSalve" type="Timer" parent="."]
 

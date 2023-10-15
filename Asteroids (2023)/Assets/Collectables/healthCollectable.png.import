@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/healthCollectable.png-3432ce9db27b49fc599e1d36d2e31ee9.stex"
+path="res://.import/healthCollectable.png-84288cd20ffbff4f863f3211b9056858.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/healthCollectable.png"
-dest_files=[ "res://.import/healthCollectable.png-3432ce9db27b49fc599e1d36d2e31ee9.stex" ]
+source_file="res://Assets/Collectables/healthCollectable.png"
+dest_files=[ "res://.import/healthCollectable.png-84288cd20ffbff4f863f3211b9056858.stex" ]
 
 [params]
 

@@ -84,14 +84,15 @@ bg_color = Color( 0.6, 0.6, 0.6, 0 )
 [node name="Enemy2" type="KinematicBody2D" groups=["Enemy"]]
 physics_interpolation_mode = 2
 rotation = -6.28319
-collision_layer = 0
-collision_mask = 0
+collision_layer = 4
+collision_mask = 6
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 10, 10 )
 frames = SubResource( 1 )
 animation = "Idle"
+frame = 1
 playing = true
 script = ExtResource( 5 )
 
