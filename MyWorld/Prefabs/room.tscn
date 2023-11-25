@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bbb66w5ra3t1h"]
+
+[ext_resource type="Script" path="res://Scripts/room_controller.gd" id="1_wqycj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8xpyi"]
+size = Vector2(16, 16)
+
+[node name="Room" type="Area2D"]
+script = ExtResource("1_wqycj")
+metadata/Room = "TEST"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_8xpyi")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
