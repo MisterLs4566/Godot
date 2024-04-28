@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://3si4frd8rksm"]
+
+[ext_resource type="Script" path="res://scripts/pomodoro_script.gd" id="1_8pamn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7uyf1"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aq414"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="Pomodoro" type="Node2D"]
+script = ExtResource("1_8pamn")
+
+[node name="Counter" type="Label" parent="."]
+offset_left = -161.0
+offset_top = -216.0
+offset_right = 173.0
+offset_bottom = 66.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 64
+text = "0
+"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+offset_left = -300.0
+offset_top = -64.0
+offset_right = 304.0
+offset_bottom = 63.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 44
+theme_override_styles/normal = SubResource("StyleBoxFlat_7uyf1")
+theme_override_styles/hover = SubResource("StyleBoxFlat_aq414")
+text = "Start"
+
+[node name="TownButton" type="Button" parent="."]
+offset_left = -298.0
+offset_top = 95.0
+offset_right = 306.0
+offset_bottom = 222.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 44
+theme_override_styles/normal = SubResource("StyleBoxFlat_7uyf1")
+theme_override_styles/hover = SubResource("StyleBoxFlat_aq414")
+text = "View Town"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 60.0
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="TownButton" to="." method="_on_town_button_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
